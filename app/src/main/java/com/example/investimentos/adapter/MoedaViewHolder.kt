@@ -9,7 +9,7 @@ import com.example.investimentos.model.MoedaModel
 class MoedaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val tvMoeda = itemView.findViewById<TextView>(R.id.tvMoeda)
-    private val tvVariacaoMoeda = itemView.findViewById<TextView>(R.id.tvVariacaoMoeda)
+     val tvVariacaoMoeda = itemView.findViewById<TextView>(R.id.tvVariacaoMoeda)
 
     fun preencher(moedaModel: MoedaModel) {
         tvMoeda.text = moedaModel.nomeMoeda

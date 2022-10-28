@@ -18,7 +18,6 @@ open class BaseViewModel : ViewModel(), CoroutineScope {
         job.cancel()
         super.onCleared()
     }
-
 }
 
 object AppContextProvider : CoroutineContextProvider {

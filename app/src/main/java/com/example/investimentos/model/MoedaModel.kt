@@ -2,7 +2,7 @@ package com.example.investimentos.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MoedaModel (
+data class MoedaModel(
     @SerializedName("name")
     val nomeMoeda: String? = null,
     @SerializedName("variation")

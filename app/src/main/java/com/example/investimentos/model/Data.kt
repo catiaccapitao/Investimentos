@@ -19,5 +19,9 @@ data class ResultData(
     @SerializedName("ARS")
     var ARS: MoedaModel? = null,
     @SerializedName("CAD")
-    var CAD: MoedaModel? = null
+    var CAD: MoedaModel? = null,
+    @SerializedName("AUD")
+    var AUD: MoedaModel? = null,
+    @SerializedName("BTC")
+    var BTC: MoedaModel? = null
 )
