@@ -5,7 +5,7 @@ import retrofit2.http.GET
 
 interface MoedaService {
 
-    @GET("finance?fields=only_results,currencies&key=8d4517e5")
+    @GET("finance?fields=only_results,currencies&key=") // adicionem a chave de vcs no final
     suspend fun buscaTodasMoedas(): Data
 
 
