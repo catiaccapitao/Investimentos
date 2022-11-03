@@ -2,7 +2,7 @@ package com.example.investimentos.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Data(
+data class DataModel(
     @SerializedName("currencies")
     var currencies: ResultData = ResultData()
 )
@@ -22,6 +22,10 @@ data class ResultData(
     var CAD: MoedaModel? = null,
     @SerializedName("AUD")
     var AUD: MoedaModel? = null,
+    @SerializedName("JPY")
+    var JPY: MoedaModel? = null,
+    @SerializedName("CNY")
+    var CNY: MoedaModel? = null,
     @SerializedName("BTC")
     var BTC: MoedaModel? = null
 )

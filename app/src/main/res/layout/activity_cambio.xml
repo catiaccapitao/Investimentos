@@ -4,6 +4,200 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CambioActivity">
+    android:background="@color/black"
+    tools:context=".ui.activity.CambioActivity">
+
+    <include
+        android:id="@+id/toolbarCambio"
+        layout="@layout/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/llDetalhesMoedaCambio"
+        android:layout_width="0dp"
+        android:layout_height="171dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/drawable_personalizada"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbarCambio"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/tvIsoENomeMoeda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/arial_mt_black"
+            android:text="USD"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvVariacaoMoedaCambio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/arial_th"
+            android:text="0,53%"
+            android:textColor="@color/green"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCompra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_th"
+                android:text="Compra: "
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvValorCompra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_th"
+                android:text="5,175"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvVenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_th"
+                android:text="Venda: "
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvValorVenda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/arial_th"
+                android:text="5,1608"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvSaldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/arial_th"
+        android:text="Saldo disponível: "
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/llDetalhesMoedaCambio"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/llDetalhesMoedaCambio"
+        app:layout_constraintTop_toBottomOf="@+id/llDetalhesMoedaCambio" />
+
+    <TextView
+        android:id="@+id/tvValorSaldoDisponivel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/arial_th"
+        android:text="R$ 1000,00"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/llDetalhesMoedaCambio"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvSaldo"
+        app:layout_constraintTop_toBottomOf="@+id/llDetalhesMoedaCambio" />
+
+    <TextView
+        android:id="@+id/tvValorMoedaEmCaixa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/arial_th"
+        android:text="7 Dolares em caixa"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvSaldo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvSaldo"
+        app:layout_constraintTop_toBottomOf="@+id/tvSaldo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edtQuantidade"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:hint="Quantidade"
+        android:inputType="number"
+        android:textColorHint="@color/white"
+        app:hintTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvValorMoedaEmCaixa">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_personalizada"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:textColor="@color/white" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVender"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="129dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/botao_personalizado"
+        android:fontFamily="@font/arial_th"
+        android:text="Vender"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/btnComprar"
+        app:layout_constraintStart_toStartOf="@id/edtQuantidade"
+        app:layout_constraintTop_toBottomOf="@+id/edtQuantidade" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnComprar"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="129dp"
+        android:background="@drawable/botao_personalizado"
+        android:fontFamily="@font/arial_th"
+        android:text="Comprar"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/edtQuantidade"
+        app:layout_constraintStart_toEndOf="@id/btnVender"
+        app:layout_constraintTop_toBottomOf="@+id/edtQuantidade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,18 +1,38 @@
 package com.example.investimentos.adapter
 
-import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.investimentos.R
+import com.example.investimentos.Utils
+import com.example.investimentos.databinding.ItemMoedaBinding
 import com.example.investimentos.model.MoedaModel
+import java.text.DecimalFormat
 
-class MoedaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class MoedaViewHolder(
+    private val binding: ItemMoedaBinding,
+    private val onClick: (moedaModel: MoedaModel) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
-    private val tvMoeda = itemView.findViewById<TextView>(R.id.tvMoeda)
-     val tvVariacaoMoeda = itemView.findViewById<TextView>(R.id.tvVariacaoMoeda)
+    private lateinit var moedaModel: MoedaModel
 
-    fun preencher(moedaModel: MoedaModel) {
-        tvMoeda.text = moedaModel.nomeMoeda
-        tvVariacaoMoeda.text = moedaModel.variacaoMoeda.toString()
+//        init {
+//            itemView.setOnClickListener {
+//                if (::moedaModel.isInitialized) {
+//                    onClick(moedaModel)
+//                }
+//            }
+//        }
+
+    fun vincula(moedaModel: MoedaModel) {
+        Utils.alteraCorDaVariacaoDaMoeda(moedaModel, binding.tvVariacaoMoeda)
+        val formatador = DecimalFormat("#.##")
+        binding.tvMoeda.text = moedaModel.isoMoeda
+        binding.tvVariacaoMoeda.text = "${formatador.format(moedaModel.variacaoMoeda)}%"
+        acessibilidade()
     }
+
+    fun acessibilidade() {
+        binding.tvMoeda.let { tvMoeda ->
+            tvMoeda.contentDescription = "A variação da moeda ${tvMoeda.text} é de "
+        }
+    }
+
 }

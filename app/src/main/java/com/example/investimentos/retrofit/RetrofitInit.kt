@@ -1,6 +1,5 @@
 package com.example.investimentos.retrofit
 
-import com.example.investimentos.retrofit.service.MoedaService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +10,7 @@ class RetrofitInit {
 
     private val URL_BASE = "https://api.hgbrasil.com/"
 
-    fun initMoedaService(): MoedaService {
+    fun initMoedaApi(): MoedaApi {
 
         val interceptor = HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -25,6 +24,6 @@ class RetrofitInit {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        return retrofit.create(MoedaService::class.java)
+        return retrofit.create(MoedaApi::class.java)
     }
 }
