@@ -1,6 +1,8 @@
 package com.example.investimentos.ui.activity
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +13,7 @@ import com.example.investimentos.model.MoedaModel
 import com.example.investimentos.repository.MoedaRepository
 import com.example.investimentos.viewModel.MainViewModelFactory
 import com.example.investimentos.viewModel.MoedaViewModel
+import com.google.android.material.textfield.TextInputEditText
 
 class CambioActivity : AppCompatActivity() {
 
@@ -68,7 +71,34 @@ class CambioActivity : AppCompatActivity() {
                 binding.tvValorSaldoDisponivel.text = saldoDisponivel.toString()
                 binding.tvValorMoedaEmCaixa.text = "${moeda.moedaEmCaixa} Dolares em caixa"
 
-//                binding.edtQuantidade
+//                var inputText: TextInputEditText
+//                inputText.addTextChangedListener()
+//
+//                binding.edtQuantidade.addOnEditTextAttachedListener {  }
+//                binding.edtQuantidade.addOnEditTextAttachedListener(object : TextWatcher {
+//                    override fun beforeTextChanged(
+//                        s: CharSequence?,
+//                        start: Int,
+//                        count: Int,
+//                        after: Int
+//                    ) {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                    override fun onTextChanged(
+//                        s: CharSequence?,
+//                        start: Int,
+//                        before: Int,
+//                        count: Int
+//                    ) {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                    override fun afterTextChanged(s: Editable?) {
+//                        TODO("Not yet implemented")
+//                    }
+//
+//                } )
             }
         }
     }
