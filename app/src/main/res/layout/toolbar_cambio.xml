@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar_cambio"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <ImageButton
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_voltar"
+        android:layout_gravity="left"
+        android:background="@color/black"/>
+
+    <TextView
+        android:id="@+id/toolbar_tela_anterior"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="yes"
+        android:layout_gravity="left"
+        android:padding="8dp"
+        android:text="@string/moedas"
+        android:fontFamily="@font/helvetica"
+        android:textColor="@color/white"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/toolbar_titulo_cambio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="yes"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Câmbio"
+        android:fontFamily="@font/helvetica"
+        android:textColor="@color/white"
+        android:textSize="17sp"/>
+
+</androidx.appcompat.widget.Toolbar>

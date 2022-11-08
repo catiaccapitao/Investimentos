@@ -16,8 +16,9 @@
         android:theme="@style/Theme.Investimentos"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.OperacaoFinalizadaActivity"
-            android:exported="false">
+            android:name=".ui.activity.CompraEVendaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

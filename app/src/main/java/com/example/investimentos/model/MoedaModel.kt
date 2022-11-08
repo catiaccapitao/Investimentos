@@ -13,5 +13,5 @@ data class MoedaModel(
     @SerializedName("sell")
     val valorVenda: Double? = null,
     var isoMoeda: String = "",
-    var moedaEmCaixa: Int? = null
+    var moedaEmCaixa: Int = 0
 ) : Serializable

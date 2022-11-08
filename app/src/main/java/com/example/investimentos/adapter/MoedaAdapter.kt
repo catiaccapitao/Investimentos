@@ -26,9 +26,9 @@ class MoedaAdapter(
 
     override fun getItemCount(): Int = listaDeMoedas.size
 
-    fun refresh(newList: List<MoedaModel?>) {
+    fun refresh(listaAtualizada: List<MoedaModel?>) {
         listaDeMoedas.clear()
-        listaDeMoedas.addAll(newList)
+        listaDeMoedas.addAll(listaAtualizada)
         notifyDataSetChanged()
     }
 }

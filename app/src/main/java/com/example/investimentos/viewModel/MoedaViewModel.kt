@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.investimentos.BaseViewModel
 import com.example.investimentos.R
 import com.example.investimentos.Utils.mapeiaIsoMoeda
-import com.example.investimentos.Utils.moedasValoresSimulados
 import com.example.investimentos.model.MoedaModel
 import com.example.investimentos.repository.MoedaRepository
 import kotlinx.coroutines.launch
@@ -13,13 +12,14 @@ import kotlinx.coroutines.launch
 class MoedaViewModel(private val moedaRepository: MoedaRepository) : BaseViewModel() {
 
     val listaDeMoedas = MutableLiveData<List<MoedaModel?>>()
+    val mensagemErro = MutableLiveData<String>()
 
     fun atualizaMoedas(): MutableLiveData<List<MoedaModel?>> {
         launch {
             try {
                 val call = moedaRepository.buscaTodasMoedas()
                 val listaMoedas = mapeiaIsoMoeda(
-                    listOf(
+                    listOfNotNull(
                         call.currencies.USD,
                         call.currencies.EUR,
                         call.currencies.GBP,
@@ -31,54 +31,22 @@ class MoedaViewModel(private val moedaRepository: MoedaRepository) : BaseViewMod
                         call.currencies.BTC
                     )
                 )
-                listaDeMoedas.postValue(moedasValoresSimulados( listaMoedas))
-
+                listaDeMoedas.postValue(listaMoedas)
             } catch (e: Exception) {
-
+                mensagemErro.postValue("Não foi possível carregar as moedas!")
             }
         }
         return listaDeMoedas
     }
 
-    fun verificaSeMoedaEstaDisponivelParaCompra(botao: AppCompatButton, valorCompra: Double?) {
-        if (desabilitaBotao(botao, valorCompra)) {
-            botao.contentDescription = "Botão de compra desabilitado, não é há preço de compra para esta moeda"
-        }
+    fun habilitaBotao(botao: AppCompatButton) {
+        botao.isEnabled = true
+        botao.setBackgroundResource(R.drawable.botao_personalizado)
     }
 
-    fun verificaSeHaSaldoDisponivel(botao: AppCompatButton, saldoDisponivel: Double?) {
-        if (saldoDisponivel != null) {
-            if (saldoDisponivel <= 0 ) {
-                botao.isEnabled = false
-                botao.setBackgroundResource(R.drawable.botao_personalizado_desabilitado)
-                botao.contentDescription = "Botão de compra desabilitado, você não possui saldo para comprar moedas"
-            }
-        }
-    }
-
-    fun verificaSeHaMoedaEmCaixa(botao: AppCompatButton, moedaEmCaixa: Int?) {
-        if (moedaEmCaixa != null) {
-            if (moedaEmCaixa <= 0) {
-                botao.isEnabled = false
-                botao.setBackgroundResource(R.drawable.botao_personalizado_desabilitado)
-                botao.contentDescription = "Botão de venda desabilitado, você não possui moedas em caixa para vender"
-            }
-        }
-    }
-
-    fun verificaSeMoedaEstaDisponivelParaVenda(botao: AppCompatButton, valorVenda: Double?) {
-        if (desabilitaBotao(botao, valorVenda)) {
-            botao.contentDescription = "Botão de venda desabilitado, não é há preço de venda para esta moeda"
-        }
-    }
-
-    fun desabilitaBotao(botao: AppCompatButton, valor: Double?): Boolean {
-        if ((valor == null) || (valor == 0.00)) {
-            botao.isEnabled = false
-            botao.setBackgroundResource(R.drawable.botao_personalizado_desabilitado)
-            return true
-        }
-        return false
+    fun desabilitaBotao(botao: AppCompatButton) {
+        botao.isEnabled = false
+        botao.setBackgroundResource(R.drawable.botao_personalizado_desabilitado)
     }
 
 }

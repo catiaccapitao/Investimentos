@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.activity.CompraEVendaActivity">
+
+    <include
+        android:id="@+id/toolbarOperacaoFinalizada"
+        layout="@layout/toolbar_cambio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvOperacaoFinalizada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="187dp"
+        android:fontFamily="@font/helvetica"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/green"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarOperacaoFinalizada" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVoltarHome"
+        android:layout_width="151dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="163dp"
+        android:background="@drawable/botao_personalizado"
+        android:fontFamily="@font/arial_th"
+        android:text="Home"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="@id/tvOperacaoFinalizada"
+        app:layout_constraintStart_toStartOf="@id/tvOperacaoFinalizada"
+        app:layout_constraintTop_toBottomOf="@+id/tvOperacaoFinalizada" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

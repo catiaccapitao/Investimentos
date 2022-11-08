@@ -38,23 +38,4 @@ object Utils {
         }
     }
 
-    fun moedasValoresSimulados(moedas: List<MoedaModel?>): List<MoedaModel?> {
-        return moedas.map {
-            it?.apply {
-                it.moedaEmCaixa = when (it.isoMoeda) {
-                    "USD" -> 6
-                    "EUR" -> 1
-                    "GBP" -> 0
-                    "ARS" -> 3
-                    "CAD" -> 2
-                    "AUD" -> 0
-                    "JPY" -> 4
-                    "CNY" -> 5
-                    "BTC" -> 2
-                    else -> 0
-                }
-            }
-        }
-    }
-
 }

@@ -1,18 +1,12 @@
 package com.example.investimentos.ui.activity
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.AccessibilityDelegateCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.investimentos.adapter.MoedaAdapter
 import com.example.investimentos.databinding.ActivityHomeBinding
-import com.example.investimentos.databinding.ToolbarBinding
 import com.example.investimentos.repository.MoedaRepository
 import com.example.investimentos.viewModel.MainViewModelFactory
 import com.example.investimentos.viewModel.MoedaViewModel
@@ -21,9 +15,6 @@ class HomeActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
-    }
-    private val bindingToolbar by lazy {
-        ToolbarBinding.inflate(layoutInflater)
     }
     private val moedaAdapter by lazy {
         MoedaAdapter()
@@ -39,16 +30,20 @@ class HomeActivity : AppCompatActivity() {
         )
         configuraRecyclerView()
         sincronizaMoedas()
-        setSupportActionBar(bindingToolbar.toolbar)
+        setSupportActionBar(binding.toolbarHome.toolbar)
 
         supportActionBar?.let {
             it.setDisplayShowTitleEnabled(false)
 //            it.setDisplayHomeAsUpEnabled(true)
         }
-        bindingToolbar.toolbarTitle.let { titulo ->
+        binding.toolbarHome.toolbarTituloHome.let { titulo ->
             titulo.contentDescription = "Lista de ${titulo.text}"
         }
-//        setIsHeading(bindingToolbar.toolbarTitle)
+
+        moedaViewModel.mensagemErro.observe(this) {
+            Toast.makeText(applicationContext, it, Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun sincronizaMoedas() {
@@ -66,23 +61,5 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         binding.rvMoedas.adapter = moedaAdapter
-    }
-
-    private fun setIsHeading(textView: TextView) {
-        //alterar eventos de acessibilidade
-        //uso para texto como titulo:
-        ViewCompat.setAccessibilityDelegate(textView, object : AccessibilityDelegateCompat() {
-            override fun onInitializeAccessibilityNodeInfo(
-                host: View,
-                info: AccessibilityNodeInfoCompat
-            ) {
-                super.onInitializeAccessibilityNodeInfo(host, info)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    host.isAccessibilityHeading = true
-                } else {
-                    info.isHeading = true
-                }
-            }
-        })
     }
 }

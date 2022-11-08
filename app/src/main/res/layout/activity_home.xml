@@ -8,6 +8,7 @@
     tools:context=".ui.activity.HomeActivity">
 
     <include
+        android:id="@+id/toolbar_home"
         layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
