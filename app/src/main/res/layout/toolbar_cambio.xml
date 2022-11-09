@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_voltar"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:background="@color/black"/>
 
     <TextView
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:importantForAccessibility="yes"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:padding="8dp"
         android:text="@string/moedas"
         android:fontFamily="@font/helvetica"
@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:padding="8dp"
-        android:text="Câmbio"
+        android:text="@string/cambio"
         android:fontFamily="@font/helvetica"
         android:textColor="@color/white"
         android:textSize="17sp"/>

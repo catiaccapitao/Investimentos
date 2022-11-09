@@ -32,11 +32,11 @@
             android:id="@+id/tvIsoENomeMoeda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/arial_mt_black"
-            android:text="USD"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -48,7 +48,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/arial_th"
-            android:text="0,53%"
+            android:text=""
             android:textColor="@color/green"
             android:textSize="20sp" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/arial_th"
-                android:text="Compra: "
+                android:text="@string/compra"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -72,8 +72,9 @@
                 android:id="@+id/tvValorCompra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
                 android:fontFamily="@font/arial_th"
-                android:text="5,175"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -91,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/arial_th"
-                android:text="Venda: "
+                android:text="@string/venda"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -99,8 +100,9 @@
                 android:id="@+id/tvValorVenda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
                 android:fontFamily="@font/arial_th"
-                android:text="5,1608"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -113,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/arial_th"
-        android:text="Saldo disponível: R$ "
+        android:text="@string/saldo_disponivel"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/llDetalhesMoedaCambio"
@@ -127,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/arial_th"
-        android:text="1000,00"
+        android:text=""
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/llDetalhesMoedaCambio"
@@ -141,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/arial_th"
-        android:text="7 Dolares em caixa"
+        android:text="@string/dolares_em_caixa"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/tvSaldo"
@@ -157,10 +159,10 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_personalizada"
         android:hint="@string/quantidade"
-        android:padding="8dp"
         android:inputType="number"
         android:maxLength="10"
         android:maxLines="1"
+        android:padding="8dp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         app:hintTextColor="@color/white"
@@ -174,27 +176,33 @@
         android:layout_height="43dp"
         android:layout_marginTop="129dp"
         android:layout_marginEnd="25dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/botao_personalizado_desabilitado"
         android:enabled="false"
         android:fontFamily="@font/arial_th"
-        android:text="Vender"
+        android:text="@string/vender"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnComprar"
         app:layout_constraintStart_toStartOf="@id/edtQuantidade"
-        app:layout_constraintTop_toBottomOf="@+id/edtQuantidade" />
+        app:layout_constraintTop_toBottomOf="@+id/edtQuantidade"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnComprar"
         android:layout_width="0dp"
         android:layout_height="43dp"
         android:layout_marginTop="129dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/botao_personalizado_desabilitado"
         android:enabled="false"
         android:fontFamily="@font/arial_th"
-        android:text="Comprar"
+        android:text="@string/comprar"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/edtQuantidade"
         app:layout_constraintStart_toEndOf="@id/btnVender"
-        app:layout_constraintTop_toBottomOf="@+id/edtQuantidade" />
+        app:layout_constraintTop_toBottomOf="@+id/edtQuantidade"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

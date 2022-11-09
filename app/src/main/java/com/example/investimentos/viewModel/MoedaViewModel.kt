@@ -9,7 +9,9 @@ import com.example.investimentos.model.MoedaModel
 import com.example.investimentos.repository.MoedaRepository
 import kotlinx.coroutines.launch
 
-class MoedaViewModel(private val moedaRepository: MoedaRepository) : BaseViewModel() {
+class MoedaViewModel(
+    private val moedaRepository: MoedaRepository
+) : BaseViewModel() {
 
     val listaDeMoedas = MutableLiveData<List<MoedaModel?>>()
     val mensagemErro = MutableLiveData<String>()
@@ -48,5 +50,4 @@ class MoedaViewModel(private val moedaRepository: MoedaRepository) : BaseViewMod
         botao.isEnabled = false
         botao.setBackgroundResource(R.drawable.botao_personalizado_desabilitado)
     }
-
 }

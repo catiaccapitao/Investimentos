@@ -1,33 +1,22 @@
 package com.example.investimentos.adapter
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investimentos.Utils
 import com.example.investimentos.databinding.ItemMoedaBinding
 import com.example.investimentos.model.MoedaModel
 import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class MoedaViewHolder(
-    private val binding: ItemMoedaBinding,
-    private val onClick: (moedaModel: MoedaModel) -> Unit
+    private val binding: ItemMoedaBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private lateinit var moedaModel: MoedaModel
-
-//        init {
-//            itemView.setOnClickListener {
-//                if (::moedaModel.isInitialized) {
-//                    onClick(moedaModel)
-//                }
-//            }
-//        }
-
+    @SuppressLint("SetTextI18n")
     fun vincula(moedaModel: MoedaModel) {
         Utils.alteraCorDaVariacaoDaMoeda(moedaModel, binding.tvVariacaoMoeda)
-        val formatador = DecimalFormat("#.##")
         binding.tvMoeda.text = moedaModel.isoMoeda
-        binding.tvVariacaoMoeda.text = moedaModel.variacaoMoeda.toString().toBigDecimal().setScale(2, RoundingMode.UP).toString()
-//        binding.tvVariacaoMoeda.text = "${formatador.format(moedaModel.variacaoMoeda)}%"
+        binding.tvVariacaoMoeda.text =
+            "${moedaModel.variacaoMoeda.toString().toBigDecimal().setScale(2, RoundingMode.UP)}%"
         acessibilidade()
     }
 

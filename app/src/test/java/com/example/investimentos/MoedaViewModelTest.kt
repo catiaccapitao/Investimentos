@@ -37,17 +37,13 @@ class MoedaViewModelTest : BaseTest() {
 
     @Test
     fun deve_RetornarErro_QuandoNaoForPossivelCarregarListaDeMoedas() {
-
         coEvery { moedaApi.buscaTodasMoedas() } throws Exception("Não foi possível carregar as moedas!")
 
-
         moedaViewModel.atualizaMoedas()
+
         assertEquals(
             "Não foi possível carregar as moedas!",
             moedaViewModel.mensagemErro.value
         )
-
-
     }
-
 }

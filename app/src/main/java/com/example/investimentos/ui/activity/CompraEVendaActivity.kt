@@ -23,6 +23,24 @@ class CompraEVendaActivity : AppCompatActivity() {
         finalizaOperacao()
     }
 
+    private fun configuraToolbar() {
+        setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarCambio)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener {
+            it.contentDescription = "Volta para tela de câmbio"
+            finish()
+        }
+        binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = "Câmbio"
+        when (operacao) {
+            "vender" -> {
+                binding.toolbarOperacaoFinalizada.toolbarTituloCambio.text = "Vender"
+            }
+            "comprar" -> {
+                binding.toolbarOperacaoFinalizada.toolbarTituloCambio.text = "Comprar"
+            }
+        }
+    }
+
     private fun finalizaOperacao() {
         val quantidade = intent.getIntExtra("quantidade", 0)
         val totalOperacao = intent.getDoubleExtra("operacaoFinalizada", 0.0)
@@ -31,7 +49,7 @@ class CompraEVendaActivity : AppCompatActivity() {
             operacaoFinalizada?.let {
                 it.append(binding.tvOperacaoFinalizada.text)
                     .append("Parabéns! \n Você acabou de $operacao\n")
-                    .append("$quantidade ${moeda?.isoMoeda} - ${moeda?.nomeMoeda}\n")
+                    .append("$quantidade ${moeda?.isoMoeda} - ${moeda?.nomeMoeda},\n")
                     .append("totalizando \n")
                     .append(
                         "R$ ${totalOperacao.toBigDecimal().setScale(2, RoundingMode.UP)}"
@@ -46,23 +64,6 @@ class CompraEVendaActivity : AppCompatActivity() {
                     finish()
                     startActivity(it)
                 }
-            }
-        }
-    }
-
-    private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarCambio)
-        supportActionBar?.let {
-            it.setDisplayShowTitleEnabled(false)
-        }
-        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
-        binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = "Câmbio"
-        when (operacao) {
-            "vender" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTituloCambio.text = "Vender"
-            }
-            "comprar" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTituloCambio.text = "Comprar"
             }
         }
     }

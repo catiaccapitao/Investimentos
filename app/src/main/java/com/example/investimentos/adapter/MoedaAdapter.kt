@@ -14,11 +14,11 @@ class MoedaAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoedaViewHolder =
         MoedaViewHolder(
-            ItemMoedaBinding.inflate(LayoutInflater.from(parent.context), parent, false), onClick
+            ItemMoedaBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
 
     override fun onBindViewHolder(holder: MoedaViewHolder, position: Int) {
-        listaDeMoedas[position]?.let { moeda->
+        listaDeMoedas[position]?.let { moeda ->
             holder.vincula(moeda)
             holder.itemView.setOnClickListener { onClick.invoke(moeda) }
         }

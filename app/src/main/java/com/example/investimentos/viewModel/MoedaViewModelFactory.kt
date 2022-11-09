@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.investimentos.repository.MoedaRepository
 
-class MainViewModelFactory constructor(private val repository: MoedaRepository) :
+class MoedaViewModelFactory constructor(private val repository: MoedaRepository) :
     ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
