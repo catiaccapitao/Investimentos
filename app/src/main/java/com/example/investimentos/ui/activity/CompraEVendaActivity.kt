@@ -24,19 +24,19 @@ class CompraEVendaActivity : AppCompatActivity() {
     }
 
     private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarCambio)
+        setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarPrincipal)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener {
-            it.contentDescription = "Volta para tela de câmbio"
-            finish()
-        }
+        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
+        binding.toolbarOperacaoFinalizada.btnVoltar.contentDescription = "Volta para tela de câmbio"
         binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = "Câmbio"
         when (operacao) {
             "vender" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTituloCambio.text = "Vender"
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = "Vender"
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription = "Tela de Venda Finalizada"
             }
             "comprar" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTituloCambio.text = "Comprar"
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = "Comprar"
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription = "Tela de Compra Finalizada"
             }
         }
     }
@@ -57,13 +57,17 @@ class CompraEVendaActivity : AppCompatActivity() {
                     .toString()
                 binding.tvOperacaoFinalizada.text = it
             }
+            configuraBotaoHome(moeda)
+        }
+    }
 
-            binding.btnVoltarHome.setOnClickListener {
-                Intent(this, HomeActivity::class.java).let {
-                    it.putExtra("moeda", moeda)
-                    finish()
-                    startActivity(it)
-                }
+    private fun configuraBotaoHome(moedaModel: MoedaModel?) {
+        binding.btnVoltarHome.contentDescription = "Volta para a tela lista de moedas"
+        binding.btnVoltarHome.setOnClickListener {
+            Intent(this, HomeActivity::class.java).let {
+                it.putExtra("moeda", moedaModel)
+                finish()
+                startActivity(it)
             }
         }
     }

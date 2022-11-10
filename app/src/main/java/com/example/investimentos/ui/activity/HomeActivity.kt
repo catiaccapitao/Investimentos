@@ -35,8 +35,8 @@ class HomeActivity : AppCompatActivity() {
     private fun configuraToolbar() {
         setSupportActionBar(binding.toolbarHome.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarHome.toolbarTituloHome.let { titulo ->
-            titulo.contentDescription = "Lista de ${titulo.text}"
+        binding.toolbarHome.toolbarTitulo.let {
+            it.contentDescription = "Lista de ${it.text}"
         }
     }
 

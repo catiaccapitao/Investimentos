@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbarCambio"
-        layout="@layout/toolbar_cambio"
+        layout="@layout/toolbar_principal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +36,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/arial_mt_black"
+            android:importantForAccessibility="yes"
             android:text=""
             android:textColor="@color/white"
             android:textSize="22sp"
@@ -48,6 +49,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/arial_th"
+            android:importantForAccessibility="yes"
             android:text=""
             android:textColor="@color/green"
             android:textSize="20sp" />
@@ -64,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/arial_th"
+                android:importantForAccessibility="no"
                 android:text="@string/compra"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -74,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:fontFamily="@font/arial_th"
+                android:importantForAccessibility="yes"
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -92,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/arial_th"
+                android:importantForAccessibility="no"
                 android:text="@string/venda"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -102,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="3dp"
                 android:fontFamily="@font/arial_th"
+                android:importantForAccessibility="yes"
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -115,6 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/arial_th"
+        android:importantForAccessibility="no"
         android:text="@string/saldo_disponivel"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -129,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/arial_th"
+        android:importantForAccessibility="yes"
         android:text=""
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -143,6 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/arial_th"
+        android:importantForAccessibility="yes"
         android:text="@string/dolares_em_caixa"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -159,6 +168,7 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/edit_text_personalizada"
         android:hint="@string/quantidade"
+        android:importantForAccessibility="yes"
         android:inputType="number"
         android:maxLength="10"
         android:maxLines="1"
@@ -168,7 +178,7 @@
         app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvValorMoedaEmCaixa" />
+        app:layout_constraintTop_toBottomOf="@+id/tvValorMoedaEmCaixa"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnVender"
@@ -180,6 +190,8 @@
         android:background="@drawable/botao_personalizado_desabilitado"
         android:enabled="false"
         android:fontFamily="@font/arial_th"
+        android:importantForAccessibility="yes"
+        android:textSize="24sp"
         android:text="@string/vender"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,7 +209,9 @@
         android:background="@drawable/botao_personalizado_desabilitado"
         android:enabled="false"
         android:fontFamily="@font/arial_th"
+        android:importantForAccessibility="yes"
         android:text="@string/comprar"
+        android:textSize="24sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/edtQuantidade"

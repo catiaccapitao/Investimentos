@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbarOperacaoFinalizada"
-        layout="@layout/toolbar_cambio"
+        layout="@layout/toolbar_principal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +22,7 @@
         android:layout_marginTop="187dp"
         android:fontFamily="@font/helvetica"
         android:text=""
+        android:importantForAccessibility="yes"
         android:textAlignment="center"
         android:textColor="@color/green"
         android:textSize="32sp"
@@ -33,14 +34,15 @@
         android:id="@+id/btnVoltarHome"
         android:layout_width="151dp"
         android:layout_height="43dp"
-        android:layout_marginTop="163dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/botao_personalizado"
         android:fontFamily="@font/arial_th"
-        android:text="Home"
+        android:text="@string/home"
         android:textColor="@color/white"
         android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tvOperacaoFinalizada"
         app:layout_constraintStart_toStartOf="@id/tvOperacaoFinalizada"
-        app:layout_constraintTop_toBottomOf="@+id/tvOperacaoFinalizada" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
