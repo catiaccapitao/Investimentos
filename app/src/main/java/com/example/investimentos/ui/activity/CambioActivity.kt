@@ -118,7 +118,7 @@ class CambioActivity : AppCompatActivity() {
                 quantidade = text.toString().toInt()
                 if (quantidade > 0) {
                     habilitaBotaoComprar(moedaModel, quantidade)
-                    halidaBotaoVender(moedaModel, quantidade)
+                    habilitaBotaoVender(moedaModel, quantidade)
                 }
             } else {
                 moedaViewModel.desabilitaBotao(binding.btnVender)
@@ -140,7 +140,7 @@ class CambioActivity : AppCompatActivity() {
         }
     }
 
-    private fun halidaBotaoVender(moedaModel: MoedaModel, quantidade: Int) {
+    private fun habilitaBotaoVender(moedaModel: MoedaModel, quantidade: Int) {
         if (moedaModel.valorVenda != null) {
             if (quantidade <= moedaModel.moedaEmCaixa) {
                 moedaViewModel.habilitaBotao(binding.btnVender)
