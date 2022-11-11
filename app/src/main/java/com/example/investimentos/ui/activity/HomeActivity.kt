@@ -20,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
         MoedaAdapter()
     }
 
-    lateinit var moedaViewModel: MoedaViewModel
+    private lateinit var moedaViewModel: MoedaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +41,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun inicializaViewModel() {
-        moedaViewModel = ViewModelProvider(this, MoedaViewModelFactory(MoedaRepository())).get(
-            MoedaViewModel::class.java
-        )
+        moedaViewModel =
+            ViewModelProvider(
+                this,
+                MoedaViewModelFactory(MoedaRepository())
+            )[MoedaViewModel::class.java]
     }
 
     private fun configuraRecyclerView() {

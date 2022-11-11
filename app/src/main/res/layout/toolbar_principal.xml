@@ -12,7 +12,8 @@
         android:layout_gravity="start"
         android:background="@color/black"
         android:importantForAccessibility="yes"
-        android:src="@drawable/ic_voltar" />
+        android:src="@drawable/ic_voltar"
+        android:contentDescription="@string/volta_para_tela_de_lista_de_moedas"/>
 
     <TextView
         android:id="@+id/toolbar_tela_anterior"

@@ -11,6 +11,7 @@ import com.example.investimentos.SingletonValoresSimulados.modificaValorPosOpera
 import com.example.investimentos.SingletonValoresSimulados.operacao
 import com.example.investimentos.SingletonValoresSimulados.saldoDisponivel
 import com.example.investimentos.Utils
+import com.example.investimentos.Utils.increaseTouch
 import com.example.investimentos.databinding.ActivityCambioBinding
 import com.example.investimentos.model.MoedaModel
 import com.example.investimentos.repository.MoedaRepository
@@ -24,7 +25,7 @@ class CambioActivity : AppCompatActivity() {
         ActivityCambioBinding.inflate(layoutInflater)
     }
 
-    lateinit var moedaViewModel: MoedaViewModel
+    private lateinit var moedaViewModel: MoedaViewModel
     private var moedaModel: MoedaModel? = null
     private var quantidade = 0
 
@@ -42,7 +43,6 @@ class CambioActivity : AppCompatActivity() {
         atualizaMoeda()
     }
 
-    @SuppressLint("SetTextI18n")
     private fun atualizaMoeda() {
         moedaModel = intent.getSerializableExtra("moeda") as? MoedaModel
         moedaModel?.let { moeda ->
@@ -52,14 +52,19 @@ class CambioActivity : AppCompatActivity() {
 
     private fun configuraToolbar() {
         setSupportActionBar(binding.toolbarCambio.toolbarPrincipal)
+        binding.toolbarCambio.toolbarTitulo.contentDescription = "Tela de Câmbio"
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbarCambio.btnVoltar.setOnClickListener { finish() }
+        increaseTouch(binding.toolbarCambio.btnVoltar, 150F)
+
     }
 
     private fun inicializaViewModel() {
-        moedaViewModel = ViewModelProvider(this, MoedaViewModelFactory(MoedaRepository())).get(
-            MoedaViewModel::class.java
-        )
+        moedaViewModel =
+            ViewModelProvider(
+                this,
+                MoedaViewModelFactory(MoedaRepository())
+            )[MoedaViewModel::class.java]
     }
 
     private fun buscaMoedaSelecionada() {
@@ -67,7 +72,6 @@ class CambioActivity : AppCompatActivity() {
         moedaModel.let { moeda ->
             if (moeda != null) {
                 preencheDados(moeda)
-                acessibilidade(moeda)
                 configuraEditTextQuantidade(moeda)
                 configuraBotaoComprar(moeda)
                 configuraBotaoVender(moeda)
@@ -75,20 +79,6 @@ class CambioActivity : AppCompatActivity() {
         }
     }
 
-    fun acessibilidade(moedaModel: MoedaModel) {
-        binding.toolbarCambio.btnVoltar.contentDescription = "Volta para tela de lista de moedas"
-        binding.toolbarCambio.toolbarTitulo.contentDescription = "Tela de Câmbio"
-        binding.tvIsoENomeMoeda.contentDescription = moedaModel.nomeMoeda
-        binding.tvVariacaoMoedaCambio.contentDescription = "A variação dessa moeda é " +
-                "${moedaModel.variacaoMoeda.toString().toBigDecimal().setScale(2, RoundingMode.UP)}%"
-        binding.tvValorCompra.contentDescription = "O preço de compra é " +
-                "${moedaModel.valorCompra.toString().toBigDecimal().setScale(2, RoundingMode.UP)} reais"
-        binding.tvValorVenda.contentDescription = "O preço de venda é " +
-                "${moedaModel.valorVenda.toString().toBigDecimal().setScale(2, RoundingMode.UP)} reais"
-        binding.tvValorSaldoDisponivel.contentDescription = "O saldo disponível é " +
-                "${saldoDisponivel.toString().toBigDecimal().setScale(2, RoundingMode.UP)} reais"
-        binding.tvValorMoedaEmCaixa.contentDescription = "Você tem ${moedaModel.moedaEmCaixa} ${moedaModel.isoMoeda} em caixa"
-    }
 
     @SuppressLint("SetTextI18n")
     private fun preencheDados(moedaModel: MoedaModel) {
@@ -100,17 +90,24 @@ class CambioActivity : AppCompatActivity() {
         binding.tvVariacaoMoedaCambio.text =
             "${moedaModel.variacaoMoeda.toString().toBigDecimal().setScale(2, RoundingMode.UP)}%"
         if (moedaModel.valorCompra == null) {
-            binding.tvValorCompra.text = "0.00"
+            binding.tvValorCompra.text = "Compra: R$0.00"
         } else {
-            binding.tvValorCompra.text = "${moedaModel.valorCompra.toString().toBigDecimal().setScale(2, RoundingMode.UP)}"
+            binding.tvValorCompra.text = "Compra: R$" +
+                    "${
+                        moedaModel.valorCompra.toString().toBigDecimal()
+                            .setScale(2, RoundingMode.UP)
+                    }"
         }
         if (moedaModel.valorVenda == null) {
-            binding.tvValorVenda.text = "0.00"
+            binding.tvValorVenda.text = "Venda: R$0.00"
         } else {
-            binding.tvValorVenda.text = "${moedaModel.valorVenda.toString().toBigDecimal().setScale(2, RoundingMode.UP)}"
+            binding.tvValorVenda.text = "Venda: R$" +
+                    "${
+                        moedaModel.valorVenda.toString().toBigDecimal().setScale(2, RoundingMode.UP)
+                    }"
         }
-        binding.tvValorSaldoDisponivel.text =
-            saldoDisponivel.toBigDecimal().setScale(2, RoundingMode.UP).toString()
+        binding.tvValorSaldoDisponivel.text = "Saldo disponível: R$" +
+                "${saldoDisponivel.toBigDecimal().setScale(2, RoundingMode.UP)}"
         binding.tvValorMoedaEmCaixa.text =
             "${moedaModel.moedaEmCaixa} ${moedaModel.nomeMoeda} em caixa"
     }

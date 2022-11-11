@@ -4,9 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.investimentos.SingletonValoresSimulados.operacao
+import com.example.investimentos.Utils.increaseTouch
 import com.example.investimentos.databinding.ActivityCompraEVendaBinding
 import com.example.investimentos.model.MoedaModel
 import java.math.RoundingMode
+
+private const val CAMBIO = "Câmbio"
+private const val VENDER = "Vender"
+private const val COMPRAR = "Comprar"
 
 class CompraEVendaActivity : AppCompatActivity() {
 
@@ -26,17 +31,20 @@ class CompraEVendaActivity : AppCompatActivity() {
     private fun configuraToolbar() {
         setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarPrincipal)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
         binding.toolbarOperacaoFinalizada.btnVoltar.contentDescription = "Volta para tela de câmbio"
-        binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = "Câmbio"
+        binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = CAMBIO
+        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
+        increaseTouch(binding.toolbarOperacaoFinalizada.btnVoltar, 150F)
         when (operacao) {
             "vender" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = "Vender"
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription = "Tela de Venda Finalizada"
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = VENDER
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription =
+                    "Tela de Venda Finalizada"
             }
             "comprar" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = "Comprar"
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription = "Tela de Compra Finalizada"
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = COMPRAR
+                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription =
+                    "Tela de Compra Finalizada"
             }
         }
     }
@@ -46,7 +54,7 @@ class CompraEVendaActivity : AppCompatActivity() {
         val totalOperacao = intent.getDoubleExtra("operacaoFinalizada", 0.0)
         moedaModel = intent.getSerializableExtra("moeda") as? MoedaModel
         moedaModel.let { moeda ->
-            operacaoFinalizada?.let {
+            operacaoFinalizada.let {
                 it.append(binding.tvOperacaoFinalizada.text)
                     .append("Parabéns! \n Você acabou de $operacao\n")
                     .append("$quantidade ${moeda?.isoMoeda} - ${moeda?.nomeMoeda},\n")

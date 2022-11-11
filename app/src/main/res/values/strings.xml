@@ -10,4 +10,5 @@
     <string name="comprar">Comprar</string>
     <string name="cambio">Câmbio</string>
     <string name="home">Home</string>
+    <string name="volta_para_tela_de_lista_de_moedas">Volta para tela de lista de moedas</string>
 </resources>

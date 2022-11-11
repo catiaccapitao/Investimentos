@@ -21,6 +21,7 @@
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/drawable_personalizada"
+        android:focusable="true"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,81 +55,31 @@
             android:textColor="@color/green"
             android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvValorCompra"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="18dp"
-            android:orientation="horizontal">
+            android:fontFamily="@font/arial_th"
+            android:importantForAccessibility="yes"
+            android:text="@string/compra"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tvCompra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/arial_th"
-                android:importantForAccessibility="no"
-                android:text="@string/compra"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvValorCompra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:fontFamily="@font/arial_th"
-                android:importantForAccessibility="yes"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvValorVenda"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:fontFamily="@font/arial_th"
+            android:importantForAccessibility="yes"
+            android:text="@string/venda"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tvVenda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/arial_th"
-                android:importantForAccessibility="no"
-                android:text="@string/venda"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvValorVenda"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:fontFamily="@font/arial_th"
-                android:importantForAccessibility="yes"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvSaldo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/arial_th"
-        android:importantForAccessibility="no"
-        android:text="@string/saldo_disponivel"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/llDetalhesMoedaCambio"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/llDetalhesMoedaCambio"
-        app:layout_constraintTop_toBottomOf="@+id/llDetalhesMoedaCambio" />
 
     <TextView
         android:id="@+id/tvValorSaldoDisponivel"
@@ -137,12 +88,12 @@
         android:layout_marginTop="32dp"
         android:fontFamily="@font/arial_th"
         android:importantForAccessibility="yes"
-        android:text=""
+        android:text="@string/saldo_disponivel"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/llDetalhesMoedaCambio"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvSaldo"
+        app:layout_constraintStart_toStartOf="@+id/llDetalhesMoedaCambio"
         app:layout_constraintTop_toBottomOf="@+id/llDetalhesMoedaCambio" />
 
     <TextView
@@ -155,10 +106,10 @@
         android:text="@string/dolares_em_caixa"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvSaldo"
+        app:layout_constraintEnd_toEndOf="@+id/tvValorSaldoDisponivel"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvSaldo"
-        app:layout_constraintTop_toBottomOf="@+id/tvSaldo" />
+        app:layout_constraintStart_toStartOf="@+id/tvValorSaldoDisponivel"
+        app:layout_constraintTop_toBottomOf="@+id/tvValorSaldoDisponivel" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/edtQuantidade"
@@ -178,7 +129,7 @@
         app:hintTextColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvValorMoedaEmCaixa"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvValorMoedaEmCaixa" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnVender"
@@ -191,9 +142,9 @@
         android:enabled="false"
         android:fontFamily="@font/arial_th"
         android:importantForAccessibility="yes"
-        android:textSize="24sp"
         android:text="@string/vender"
         android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnComprar"
         app:layout_constraintStart_toStartOf="@id/edtQuantidade"
@@ -211,8 +162,8 @@
         android:fontFamily="@font/arial_th"
         android:importantForAccessibility="yes"
         android:text="@string/comprar"
-        android:textSize="24sp"
         android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/edtQuantidade"
         app:layout_constraintStart_toEndOf="@id/btnVender"

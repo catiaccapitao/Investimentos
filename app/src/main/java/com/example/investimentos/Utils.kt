@@ -1,19 +1,23 @@
 package com.example.investimentos
 
 import android.graphics.Color
+import android.graphics.Rect
+import android.view.TouchDelegate
+import android.view.View
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import com.example.investimentos.model.MoedaModel
 
 object Utils {
 
     fun alteraCorDaVariacaoDaMoeda(moedaModel: MoedaModel, tvVariacaoMoeda: TextView) {
         val variacaoMoeda = moedaModel.variacaoMoeda
-        var cor = ""
+        val cor: String
         if (variacaoMoeda != null) {
-            when {
-                variacaoMoeda < 0 -> cor = "#D0021B"
-                variacaoMoeda > 0 -> cor = "#7ED321"
-                else -> cor = "#FFFFFFFF"
+            cor = when {
+                variacaoMoeda < 0 -> "#D0021B"
+                variacaoMoeda > 0 -> "#7ED321"
+                else -> "#FFFFFFFF"
             }
             tvVariacaoMoeda.setTextColor(Color.parseColor(cor))
         }
@@ -35,6 +39,18 @@ object Utils {
                     else -> ""
                 }
             }
+        }
+    }
+
+    @BindingAdapter("increaseTouch")
+    fun increaseTouch(view: View, value: Float) {
+        val parent = view.parent
+        (parent as View).post {
+            val rect = Rect()
+            view.getHitRect(rect)
+            val intValue = value.toInt()
+            rect.right += intValue
+            parent.touchDelegate = TouchDelegate(rect, view)
         }
     }
 }
