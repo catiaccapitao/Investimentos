@@ -55,7 +55,7 @@ class CambioActivity : AppCompatActivity() {
         binding.toolbarCambio.toolbarTitulo.contentDescription = "Tela de Câmbio"
         supportActionBar?.setDisplayShowTitleEnabled(false)
         binding.toolbarCambio.btnVoltar.setOnClickListener { finish() }
-        increaseTouch(binding.toolbarCambio.btnVoltar, 150F)
+//        increaseTouch(binding.toolbarCambio.btnVoltar, 150F)
 
     }
 
@@ -113,7 +113,7 @@ class CambioActivity : AppCompatActivity() {
     }
 
     private fun configuraEditTextQuantidade(moedaModel: MoedaModel) {
-        binding.edtQuantidade.doOnTextChanged { text, start, before, count ->
+        binding.edtQuantidade.doOnTextChanged { text, _, _, _ ->
             if (text.toString().isNotBlank()) {
                 quantidade = text.toString().toInt()
                 if (quantidade > 0) {

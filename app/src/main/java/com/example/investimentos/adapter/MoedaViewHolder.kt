@@ -20,7 +20,7 @@ class MoedaViewHolder(
         acessibilidade()
     }
 
-    fun acessibilidade() {
+    private fun acessibilidade() {
         binding.tvMoeda.let { tvMoeda ->
             tvMoeda.contentDescription = "A variação da moeda ${tvMoeda.text} é de "
         }
