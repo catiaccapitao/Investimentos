@@ -2,20 +2,16 @@ package com.example.investimentos.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.investimentos.SingletonValoresSimulados.operacao
-import com.example.investimentos.Utils.increaseTouch
+import com.example.investimentos.*
+import com.example.investimentos.SingletonValoresSimulados.tipoOperacao
+import com.example.investimentos.Utils.formataMoedaBrasileira
 import com.example.investimentos.databinding.ActivityCompraEVendaBinding
 import com.example.investimentos.model.MoedaModel
-import java.math.RoundingMode
 
-private const val CAMBIO = "Câmbio"
-private const val VENDER = "Vender"
-private const val COMPRAR = "Comprar"
 
-class CompraEVendaActivity : AppCompatActivity() {
+class CompraEVendaActivity : BaseActivity() {
 
-    private val binding by lazy {
+    private val compraEVendaBinding by lazy {
         ActivityCompraEVendaBinding.inflate(layoutInflater)
     }
     private var moedaModel: MoedaModel? = null
@@ -23,57 +19,68 @@ class CompraEVendaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        configuraToolbar()
+        setContentView(compraEVendaBinding.root)
+        setIsHeading(compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo)
         finalizaOperacao()
+        defineTituloToolbar()
+        criaListenersBotoes()
     }
 
-    private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarPrincipal)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarOperacaoFinalizada.btnVoltar.contentDescription = "Volta para tela de câmbio"
-        binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = CAMBIO
-        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
-        increaseTouch(binding.toolbarOperacaoFinalizada.btnVoltar, 150F)
-        when (operacao) {
-            "vender" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = VENDER
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription =
-                    "Tela de Venda Finalizada"
+    private fun defineTituloToolbar() {
+        when (tipoOperacao) {
+            VENDER -> {
+                compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo.text = VENDER
             }
-            "comprar" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = COMPRAR
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription =
-                    "Tela de Compra Finalizada"
+            COMPRAR -> {
+                compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo.text = COMPRAR
             }
         }
     }
 
     private fun finalizaOperacao() {
-        val quantidade = intent.getIntExtra("quantidade", 0)
-        val totalOperacao = intent.getDoubleExtra("operacaoFinalizada", 0.0)
-        moedaModel = intent.getSerializableExtra("moeda") as? MoedaModel
+        val quantidade = intent.getIntExtra(QUANTIDADE, 0)
+        val totalOperacao = intent.getDoubleExtra(OPERACAO_FINALIZADA, 0.0)
+        moedaModel = intent.getSerializableExtra(MOEDA) as? MoedaModel
         moedaModel.let { moeda ->
             operacaoFinalizada.let {
-                it.append(binding.tvOperacaoFinalizada.text)
-                    .append("Parabéns! \n Você acabou de $operacao\n")
-                    .append("$quantidade ${moeda?.isoMoeda} - ${moeda?.nomeMoeda},\n")
-                    .append("totalizando \n")
-                    .append(
-                        "R$ ${totalOperacao.toBigDecimal().setScale(2, RoundingMode.UP)}"
-                    )
-                    .toString()
-                binding.tvOperacaoFinalizada.text = it
+                if (tipoOperacao == COMPRAR) {
+                    it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
+                        .append(getString(R.string.parabens_voce_acabou_de_comprar))
+                        .append(quantidade)
+                        .append(getString(R.string.espaço))
+                        .append(moeda?.isoMoeda)
+                        .append(getString(R.string.hifen))
+                        .append(moeda?.nomeMoeda)
+                        .append(getString(R.string.totalizando))
+                        .append(formataMoedaBrasileira(totalOperacao))
+                        .toString()
+                } else if (tipoOperacao == VENDER) {
+                    it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
+                        .append(getString(R.string.parabens_voce_acabou_de_vender))
+                        .append(quantidade)
+                        .append(getString(R.string.espaço))
+                        .append(moeda?.isoMoeda)
+                        .append(getString(R.string.hifen))
+                        .append(moeda?.nomeMoeda)
+                        .append(getString(R.string.totalizando))
+                        .append(formataMoedaBrasileira(totalOperacao))
+                        .toString()
+                }
+                compraEVendaBinding.tvOperacaoFinalizada.text = it
             }
-            configuraBotaoHome(moeda)
         }
     }
 
-    private fun configuraBotaoHome(moedaModel: MoedaModel?) {
-        binding.btnVoltarHome.contentDescription = "Volta para a tela lista de moedas"
-        binding.btnVoltarHome.setOnClickListener {
+    private fun criaListenersBotoes() {
+        compraEVendaBinding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
+        configuraBotaoHome()
+    }
+
+    private fun configuraBotaoHome() {
+        compraEVendaBinding.btnVoltarHome.contentDescription =
+            getString(R.string.volta_para_home_moedas)
+        compraEVendaBinding.btnVoltarHome.setOnClickListener {
             Intent(this, HomeActivity::class.java).let {
-                it.putExtra("moeda", moedaModel)
                 finish()
                 startActivity(it)
             }

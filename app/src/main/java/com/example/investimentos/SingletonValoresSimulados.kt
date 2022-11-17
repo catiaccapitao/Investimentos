@@ -4,8 +4,8 @@ import com.example.investimentos.model.MoedaModel
 
 object SingletonValoresSimulados {
 
-    var operacao: String? = null
-    var saldoDisponivel = 10.0
+    var tipoOperacao: String? = null
+    var saldoDisponivel = 100.0
     var usd = 6
     var eur = 1
     var gbp = 0

@@ -1,12 +1,11 @@
 package com.example.investimentos
 
 import android.graphics.Color
-import android.graphics.Rect
-import android.view.TouchDelegate
-import android.view.View
 import android.widget.TextView
-import androidx.databinding.BindingAdapter
 import com.example.investimentos.model.MoedaModel
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 
 object Utils {
 
@@ -42,15 +41,15 @@ object Utils {
         }
     }
 
-    @BindingAdapter("increaseTouch")
-    fun increaseTouch(view: View, value: Float) {
-        val parent = view.parent
-        (parent as View).post {
-            val rect = Rect()
-            view.getHitRect(rect)
-            val intValue = value.toInt()
-            rect.right += intValue
-            parent.touchDelegate = TouchDelegate(rect, view)
-        }
+    fun formataMoedaBrasileira(valor: Double?): String {
+        return DecimalFormat.getCurrencyInstance(Locale("pt", "BR")).format(valor)
+    }
+
+    fun formataPorcentagem(valor: Double?): String {
+        val formatador = DecimalFormat()
+        formatador.decimalFormatSymbols = DecimalFormatSymbols(Locale("pt", "BR"))
+        formatador.minimumFractionDigits = 2
+        formatador.maximumFractionDigits = 2
+        return "${formatador.format(valor)}%"
     }
 }

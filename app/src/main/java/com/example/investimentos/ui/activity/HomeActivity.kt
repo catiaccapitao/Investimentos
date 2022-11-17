@@ -3,17 +3,17 @@ package com.example.investimentos.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.example.investimentos.MOEDA
 import com.example.investimentos.adapter.MoedaAdapter
 import com.example.investimentos.databinding.ActivityHomeBinding
 import com.example.investimentos.repository.MoedaRepository
 import com.example.investimentos.viewModel.MoedaViewModel
 import com.example.investimentos.viewModel.MoedaViewModelFactory
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
-    private val binding by lazy {
+    private val homeBinding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
     private val moedaAdapter by lazy {
@@ -24,20 +24,12 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        configuraToolbar()
+        setContentView(homeBinding.root)
+        setIsHeading(homeBinding.toolbarHome.toolbarTitulo)
         inicializaViewModel()
         configuraRecyclerView()
         sincronizaMoedas()
         exibeMensagemDeFalha()
-    }
-
-    private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarHome.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarHome.toolbarTitulo.let {
-            it.contentDescription = "Lista de ${it.text}"
-        }
     }
 
     private fun inicializaViewModel() {
@@ -51,11 +43,11 @@ class HomeActivity : AppCompatActivity() {
     private fun configuraRecyclerView() {
         moedaAdapter.onClick = { moeda ->
             Intent(this, CambioActivity::class.java).let {
-                it.putExtra("moeda", moeda)
+                it.putExtra(MOEDA, moeda)
                 startActivity(it)
             }
         }
-        binding.rvMoedas.adapter = moedaAdapter
+        homeBinding.rvMoedas.adapter = moedaAdapter
     }
 
     private fun sincronizaMoedas() {

@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbarCambio"
-        layout="@layout/toolbar_principal"
+        layout="@layout/toolbar_cambio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,19 +29,46 @@
         app:layout_constraintTop_toBottomOf="@id/toolbarCambio"
         app:layout_constraintVertical_bias="0.0">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="15dp">
         <TextView
-            android:id="@+id/tvIsoENomeMoeda"
+            android:id="@+id/tvIsoMoeda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="15dp"
             android:fontFamily="@font/arial_mt_black"
             android:importantForAccessibility="yes"
-            android:text=""
+            android:text="USD"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" - "
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tvNomeMoeda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:fontFamily="@font/arial_mt_black"
+            android:importantForAccessibility="yes"
+            android:text="Dollar"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvVariacaoMoedaCambio"

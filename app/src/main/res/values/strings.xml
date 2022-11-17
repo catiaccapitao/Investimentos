@@ -2,13 +2,22 @@
     <string name="app_name">Investimentos</string>
     <string name="moedas">Moedas</string>
     <string name="quantidade">Quantidade</string>
-    <string name="compra">Compra:</string>
-    <string name="venda">Venda:</string>
-    <string name="saldo_disponivel">Saldo disponível: R$</string>
+    <string name="compra">Compra:\u0020</string>
+    <string name="venda">Venda:\u0020</string>
+    <string name="saldo_disponivel">Saldo disponível:\u0020</string>
     <string name="dolares_em_caixa">7 Dolares em caixa</string>
     <string name="vender">Vender</string>
     <string name="comprar">Comprar</string>
     <string name="cambio">Câmbio</string>
     <string name="home">Home</string>
-    <string name="volta_para_tela_de_lista_de_moedas">Volta para tela de lista de moedas</string>
+    <string name="volta_para_tela_cambio">Volta para a tela câmbio</string>
+    <string name="volta_para_home_moedas">Volta para a home moedas</string>
+    <string name="volta_para_tela_de_cambio">Volta para tela de câmbio</string>
+    <string name="parabens_voce_acabou_de_comprar">"Parabéns! \n Você acabou de comprar \n</string>
+    <string name="parabens_voce_acabou_de_vender">"Parabéns! \n Você acabou de vender \n</string>
+    <string name="hifen">\u0020-\u0020</string>
+    <string name="totalizando">,\n totalizando \n</string>
+    <string name="em_caixa">\u0020 em caixa</string>
+    <string name="espaço">\u0020</string>
+
 </resources>
