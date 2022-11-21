@@ -1,6 +1,5 @@
 package com.example.investimentos.adapter
 
-import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import com.example.investimentos.Utils
 import com.example.investimentos.Utils.formataPorcentagem
@@ -11,7 +10,6 @@ class MoedaViewHolder(
     private val binding: ItemMoedaBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    @SuppressLint("SetTextI18n")
     fun vincula(moedaModel: MoedaModel) {
         Utils.alteraCorDaVariacaoDaMoeda(moedaModel, binding.tvVariacaoMoeda)
         binding.tvMoeda.text = moedaModel.isoMoeda

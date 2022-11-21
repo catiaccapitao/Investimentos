@@ -8,14 +8,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.investimentos.R
 import com.example.investimentos.databinding.ToolbarCambioBinding
+import com.example.investimentos.repository.MoedaRepository
+import com.example.investimentos.viewModel.MoedaViewModel
+import com.example.investimentos.viewModel.MoedaViewModelFactory
 
 open class BaseActivity : AppCompatActivity() {
 
-    val binding by lazy {
+    private val binding by lazy {
         ToolbarCambioBinding.inflate(layoutInflater)
     }
+
+    protected lateinit var moedaViewModel: MoedaViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,5 +49,13 @@ open class BaseActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    protected fun inicializaViewModel() {
+        moedaViewModel =
+            ViewModelProvider(
+                this,
+                MoedaViewModelFactory(MoedaRepository())
+            )[MoedaViewModel::class.java]
     }
 }

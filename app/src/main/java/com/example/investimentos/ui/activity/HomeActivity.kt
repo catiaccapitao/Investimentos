@@ -3,13 +3,9 @@ package com.example.investimentos.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import com.example.investimentos.MOEDA
 import com.example.investimentos.adapter.MoedaAdapter
 import com.example.investimentos.databinding.ActivityHomeBinding
-import com.example.investimentos.repository.MoedaRepository
-import com.example.investimentos.viewModel.MoedaViewModel
-import com.example.investimentos.viewModel.MoedaViewModelFactory
 
 class HomeActivity : BaseActivity() {
 
@@ -20,8 +16,6 @@ class HomeActivity : BaseActivity() {
         MoedaAdapter()
     }
 
-    private lateinit var moedaViewModel: MoedaViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(homeBinding.root)
@@ -30,14 +24,6 @@ class HomeActivity : BaseActivity() {
         configuraRecyclerView()
         sincronizaMoedas()
         exibeMensagemDeFalha()
-    }
-
-    private fun inicializaViewModel() {
-        moedaViewModel =
-            ViewModelProvider(
-                this,
-                MoedaViewModelFactory(MoedaRepository())
-            )[MoedaViewModel::class.java]
     }
 
     private fun configuraRecyclerView() {

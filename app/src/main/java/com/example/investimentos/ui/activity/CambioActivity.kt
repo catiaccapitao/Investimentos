@@ -3,19 +3,17 @@ package com.example.investimentos.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
 import com.example.investimentos.*
-import com.example.investimentos.SingletonValoresSimulados.buscaValorSimuladoParaModel
-import com.example.investimentos.SingletonValoresSimulados.modificaValorPosOperacao
+import com.example.investimentos.SingletonValoresSimulados.modificaValorSimulado
+import com.example.investimentos.SingletonValoresSimulados.pegaValorHashmap
 import com.example.investimentos.SingletonValoresSimulados.saldoDisponivel
 import com.example.investimentos.SingletonValoresSimulados.tipoOperacao
+import com.example.investimentos.Utils.defineEstadoBotao
+import com.example.investimentos.Utils.desabilitaBotao
 import com.example.investimentos.Utils.formataMoedaBrasileira
 import com.example.investimentos.Utils.formataPorcentagem
 import com.example.investimentos.databinding.ActivityCambioBinding
 import com.example.investimentos.model.MoedaModel
-import com.example.investimentos.repository.MoedaRepository
-import com.example.investimentos.viewModel.MoedaViewModel
-import com.example.investimentos.viewModel.MoedaViewModelFactory
 
 class CambioActivity : BaseActivity() {
 
@@ -23,7 +21,6 @@ class CambioActivity : BaseActivity() {
         ActivityCambioBinding.inflate(layoutInflater)
     }
 
-    private lateinit var moedaViewModel: MoedaViewModel
     private var moedaModel: MoedaModel? = null
     private var quantidade = 0
 
@@ -47,14 +44,6 @@ class CambioActivity : BaseActivity() {
         }
     }
 
-    private fun inicializaViewModel() {
-        moedaViewModel =
-            ViewModelProvider(
-                this,
-                MoedaViewModelFactory(MoedaRepository())
-            )[MoedaViewModel::class.java]
-    }
-
     private fun buscaMoedaSelecionada() {
         moedaModel = intent.getSerializableExtra(MOEDA) as? MoedaModel
         moedaModel?.let { moeda ->
@@ -65,7 +54,6 @@ class CambioActivity : BaseActivity() {
     }
 
     private fun preencheDados(moedaModel: MoedaModel) {
-        if (moedaModel.moedaEmCaixa == 0) buscaValorSimuladoParaModel(moedaModel)
         if (moedaModel.valorCompra == null) moedaModel.valorCompra = 0.0
         if (moedaModel.valorVenda == null) moedaModel.valorVenda = 0.0
         Utils.alteraCorDaVariacaoDaMoeda(moedaModel, cambioBinding.tvVariacaoMoedaCambio)
@@ -86,7 +74,7 @@ class CambioActivity : BaseActivity() {
             append(formataMoedaBrasileira(saldoDisponivel))
         }
         cambioBinding.tvValorMoedaEmCaixa.text = buildString {
-            append(moedaModel.moedaEmCaixa)
+            append(pegaValorHashmap(moedaModel.isoMoeda))
             append(getString(R.string.espaço))
             append(moedaModel.nomeMoeda)
             append(getString(R.string.em_caixa))
@@ -98,7 +86,7 @@ class CambioActivity : BaseActivity() {
             if (text.toString().isNotBlank()) {
                 quantidade = text.toString().toInt()
                 if (quantidade > 0) {
-                    habilitaBotoes(moedaModel, quantidade)
+                    habilitaBotoes(moedaModel, quantidade, moedaModel.isoMoeda)
                 }
             } else {
                 desabilitaBotoes()
@@ -106,32 +94,30 @@ class CambioActivity : BaseActivity() {
         }
     }
 
-    private fun habilitaBotoes(moedaModel: MoedaModel, quantidade: Int) {
-        if (quantidade * moedaModel.valorCompra!! <= saldoDisponivel) {
-            moedaViewModel.defineEstadoBotao(
-                true,
-                cambioBinding.btnComprar,
-                R.drawable.botao_personalizado
-            )
+    private fun habilitaBotoes(moedaModel: MoedaModel, quantidade: Int, isoMoeda: String) {
+        moedaModel.valorCompra?.let { valorCompra ->
+            if (quantidade * valorCompra <= saldoDisponivel) {
+                defineEstadoBotao(
+                    true,
+                    cambioBinding.btnComprar,
+                    R.drawable.botao_personalizado
+                )
+            }
         }
-        if (quantidade <= moedaModel.moedaEmCaixa) {
-            moedaViewModel.defineEstadoBotao(
-                true,
-                cambioBinding.btnVender,
-                R.drawable.botao_personalizado
-            )
+        moedaModel.valorVenda?.let { valorVenda ->
+            if (quantidade <= pegaValorHashmap(isoMoeda) && valorVenda > 0) {
+                defineEstadoBotao(
+                    true,
+                    cambioBinding.btnVender,
+                    R.drawable.botao_personalizado
+                )
+            }
         }
     }
 
     private fun desabilitaBotoes() {
-        moedaViewModel.desabilitaBotao(
-            cambioBinding.btnVender,
-            R.drawable.botao_personalizado_desabilitado
-        )
-        moedaViewModel.desabilitaBotao(
-            cambioBinding.btnComprar,
-            R.drawable.botao_personalizado_desabilitado
-        )
+        desabilitaBotao(cambioBinding.btnVender, R.drawable.botao_personalizado_desabilitado)
+        desabilitaBotao(cambioBinding.btnComprar, R.drawable.botao_personalizado_desabilitado)
     }
 
     private fun criaListenersBotoes(moedaModel: MoedaModel) {
@@ -141,19 +127,21 @@ class CambioActivity : BaseActivity() {
     }
 
     private fun calculoCompra(moedaModel: MoedaModel) {
-        moedaModel.moedaEmCaixa += quantidade
-        modificaValorPosOperacao(moedaModel)
-        val totalCompra = quantidade * moedaModel.valorCompra!!
-        saldoDisponivel -= totalCompra
-        finalizaOperacao(CompraEVendaActivity::class.java, COMPRAR, totalCompra)
+        moedaModel.valorCompra?.let { valorCompra ->
+            modificaValorSimulado(moedaModel.isoMoeda, COMPRAR, quantidade)
+            val totalCompra = quantidade * valorCompra
+            saldoDisponivel -= totalCompra
+            finalizaOperacao(CompraEVendaActivity::class.java, COMPRAR, totalCompra)
+        }
     }
 
     private fun calculoVenda(moedaModel: MoedaModel) {
-        moedaModel.moedaEmCaixa -= quantidade
-        modificaValorPosOperacao(moedaModel)
-        val totalVenda = quantidade * moedaModel.valorVenda!!
-        saldoDisponivel += totalVenda
-        finalizaOperacao(CompraEVendaActivity::class.java, VENDER, totalVenda)
+        moedaModel.valorVenda?.let { valorVenda ->
+            modificaValorSimulado(moedaModel.isoMoeda, VENDER, quantidade)
+            val totalVenda = quantidade * valorVenda
+            saldoDisponivel += totalVenda
+            finalizaOperacao(CompraEVendaActivity::class.java, VENDER, totalVenda)
+        }
     }
 
     private fun finalizaOperacao(classe: Class<*>, operacao: String, total: Double) {

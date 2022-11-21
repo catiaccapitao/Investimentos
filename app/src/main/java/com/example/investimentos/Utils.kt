@@ -2,6 +2,7 @@ package com.example.investimentos
 
 import android.graphics.Color
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import com.example.investimentos.model.MoedaModel
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -51,5 +52,23 @@ object Utils {
         formatador.minimumFractionDigits = 2
         formatador.maximumFractionDigits = 2
         return "${formatador.format(valor)}%"
+    }
+
+    fun defineEstadoBotao(ehPossivel: Boolean, botao: AppCompatButton, drawableBotao: Int) {
+        if (ehPossivel) {
+            habilitaBotao(botao, drawableBotao)
+        } else {
+            desabilitaBotao(botao, drawableBotao)
+        }
+    }
+
+    fun habilitaBotao(botao: AppCompatButton, drawableBotao: Int) {
+        botao.isEnabled = true
+        botao.setBackgroundResource(drawableBotao)
+    }
+
+    fun desabilitaBotao(botao: AppCompatButton, drawableBotao: Int) {
+        botao.isEnabled = false
+        botao.setBackgroundResource(drawableBotao)
     }
 }

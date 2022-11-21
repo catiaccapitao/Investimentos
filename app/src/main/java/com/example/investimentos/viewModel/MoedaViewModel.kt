@@ -1,6 +1,5 @@
 package com.example.investimentos.viewModel
 
-import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.MutableLiveData
 import com.example.investimentos.BaseViewModel
 import com.example.investimentos.Utils.mapeiaIsoMoeda
@@ -38,23 +37,5 @@ class MoedaViewModel(
             }
         }
         return listaDeMoedas
-    }
-
-    fun defineEstadoBotao(ehPossivel: Boolean, botao: AppCompatButton, drawableBotao: Int) {
-        if (ehPossivel) {
-            habilitaBotao(botao, drawableBotao)
-        } else {
-            desabilitaBotao(botao, drawableBotao)
-        }
-    }
-
-    fun habilitaBotao(botao: AppCompatButton, drawableBotao: Int) {
-        botao.isEnabled = true
-        botao.setBackgroundResource(drawableBotao)
-    }
-
-    fun desabilitaBotao(botao: AppCompatButton, drawableBotao: Int) {
-        botao.isEnabled = false
-        botao.setBackgroundResource(drawableBotao)
     }
 }

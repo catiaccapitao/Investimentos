@@ -19,5 +19,7 @@
     <string name="totalizando">,\n totalizando \n</string>
     <string name="em_caixa">\u0020 em caixa</string>
     <string name="espaço">\u0020</string>
+    <string name="a_variacao_da_moeda">A variação da moeda\u0020</string>
+    <string name="e_de">\u0020 é de</string>
 
 </resources>

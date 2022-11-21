@@ -12,6 +12,5 @@ data class MoedaModel(
     var valorCompra: Double? = null,
     @SerializedName("sell")
     var valorVenda: Double? = null,
-    var isoMoeda: String = "",
-    var moedaEmCaixa: Int = 0
+    var isoMoeda: String = ""
 ) : Serializable
