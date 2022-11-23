@@ -6,19 +6,19 @@
     <string name="venda">Venda:\u0020</string>
     <string name="saldo_disponivel">Saldo disponível:\u0020</string>
     <string name="dolares_em_caixa">7 Dolares em caixa</string>
-    <string name="vender">Vender</string>
-    <string name="comprar">Comprar</string>
+    <string name="vender">vender</string>
+    <string name="comprar">comprar</string>
     <string name="cambio">Câmbio</string>
     <string name="home">Home</string>
     <string name="volta_para_tela_cambio">Volta para a tela câmbio</string>
     <string name="volta_para_home_moedas">Volta para a home moedas</string>
     <string name="volta_para_tela_de_cambio">Volta para tela de câmbio</string>
-    <string name="parabens_voce_acabou_de_comprar">"Parabéns! \n Você acabou de comprar \n</string>
-    <string name="parabens_voce_acabou_de_vender">"Parabéns! \n Você acabou de vender \n</string>
+    <string name="parabens_voce_acabou_de">"Parabéns! \n Você acabou\u0020</string>
     <string name="hifen">\u0020-\u0020</string>
     <string name="totalizando">,\n totalizando \n</string>
     <string name="em_caixa">\u0020 em caixa</string>
     <string name="espaço">\u0020</string>
+    <string name="pula_linha">\n</string>
     <string name="a_variacao_da_moeda">A variação da moeda\u0020</string>
     <string name="e_de">\u0020 é de</string>
 

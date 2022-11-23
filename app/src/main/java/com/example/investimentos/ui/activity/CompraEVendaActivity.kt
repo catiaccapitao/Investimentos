@@ -27,7 +27,10 @@ class CompraEVendaActivity : BaseActivity() {
                 it
             )
         }
-        modificaNomeTelaAnteriorToolbar(compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTelaAnterior, CAMBIO)
+        modificaNomeTelaAnteriorToolbar(
+            compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTelaAnterior,
+            CAMBIO
+        )
         finalizaOperacao()
         configuraBotaoHome()
     }
@@ -35,34 +38,28 @@ class CompraEVendaActivity : BaseActivity() {
     private fun finalizaOperacao() {
         val quantidade = intent.getIntExtra(QUANTIDADE, 0)
         val totalOperacao = intent.getDoubleExtra(OPERACAO_FINALIZADA, 0.0)
+        var operacao = ""
         moedaModel = intent.getSerializableExtra(MOEDA) as? MoedaModel
         moedaModel.let { moeda ->
             operacaoFinalizada.let {
                 if (tipoOperacao == COMPRAR) {
-                    it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
-                        .append(
-                            getString(R.string.parabens_voce_acabou_de_comprar),
-                            quantidade,
-                            getString(R.string.espaço),
-                            moeda?.isoMoeda,
-                            getString(R.string.hifen),
-                            moeda?.nomeMoeda,
-                            getString(R.string.totalizando),
-                            formataMoedaBrasileira(totalOperacao)
-                        ).toString()
+                    operacao = getString(R.string.comprar)
                 } else if (tipoOperacao == VENDER) {
-                    it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
-                        .append(
-                            getString(R.string.parabens_voce_acabou_de_vender),
-                            quantidade,
-                            getString(R.string.espaço),
-                            moeda?.isoMoeda,
-                            getString(R.string.hifen),
-                            moeda?.nomeMoeda,
-                            getString(R.string.totalizando),
-                            formataMoedaBrasileira(totalOperacao)
-                        ).toString()
+                    operacao = getString(R.string.vender)
                 }
+                it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
+                    .append(
+                        getString(R.string.parabens_voce_acabou_de),
+                        operacao,
+                        getString(R.string.pula_linha),
+                        quantidade,
+                        getString(R.string.espaço),
+                        moeda?.isoMoeda,
+                        getString(R.string.hifen),
+                        moeda?.nomeMoeda,
+                        getString(R.string.totalizando),
+                        formataMoedaBrasileira(totalOperacao)
+                    ).toString()
                 compraEVendaBinding.tvOperacaoFinalizada.text = it
             }
         }
