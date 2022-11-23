@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import com.example.investimentos.MOEDA
+import com.example.investimentos.MOEDAS
+import com.example.investimentos.R
 import com.example.investimentos.adapter.MoedaAdapter
 import com.example.investimentos.databinding.ActivityHomeBinding
 
@@ -19,7 +21,12 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(homeBinding.root)
-        setIsHeading(homeBinding.toolbarHome.toolbarTitulo)
+        configuraToolbar(
+            homeBinding.toolbarHome.toolbarTitulo,
+            homeBinding.toolbarHome.btnVoltar,
+            MOEDAS
+        )
+        modificaNomeTelaAnteriorToolbar(homeBinding.toolbarHome.toolbarTelaAnterior, getString(R.string.espaço))
         inicializaViewModel()
         configuraRecyclerView()
         sincronizaMoedas()

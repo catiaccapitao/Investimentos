@@ -14,13 +14,5 @@ class MoedaViewHolder(
         Utils.alteraCorDaVariacaoDaMoeda(moedaModel, binding.tvVariacaoMoeda)
         binding.tvMoeda.text = moedaModel.isoMoeda
         binding.tvVariacaoMoeda.text = formataPorcentagem(moedaModel.variacaoMoeda)
-        acessibilidade()
     }
-
-    private fun acessibilidade() {
-        binding.tvMoeda.let { tvMoeda ->
-            tvMoeda.contentDescription = "A variação da moeda ${tvMoeda.text} é de "
-        }
-    }
-
 }

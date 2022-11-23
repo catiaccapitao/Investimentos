@@ -3,14 +3,16 @@ package com.example.investimentos.ui.activity
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.lifecycle.ViewModelProvider
+import com.example.investimentos.MOEDAS
 import com.example.investimentos.R
-import com.example.investimentos.databinding.ToolbarCambioBinding
+import com.example.investimentos.databinding.ToolbarBinding
 import com.example.investimentos.repository.MoedaRepository
 import com.example.investimentos.viewModel.MoedaViewModel
 import com.example.investimentos.viewModel.MoedaViewModelFactory
@@ -18,7 +20,7 @@ import com.example.investimentos.viewModel.MoedaViewModelFactory
 open class BaseActivity : AppCompatActivity() {
 
     private val binding by lazy {
-        ToolbarCambioBinding.inflate(layoutInflater)
+        ToolbarBinding.inflate(layoutInflater)
     }
 
     protected lateinit var moedaViewModel: MoedaViewModel
@@ -26,16 +28,26 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
-        configuraToolbar()
     }
 
-    private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarPrincipal)
+    protected open fun configuraToolbar(tvTitulo: TextView, btnVoltar: ImageButton, titulo: String) {
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        setIsHeading(binding.toolbarTitulo)
+        setIsHeading(tvTitulo)
+        tvTitulo.text = titulo
+        if (titulo == MOEDAS) {
+            btnVoltar.visibility = View.GONE
+        } else {
+            btnVoltar.visibility = View.VISIBLE
+            btnVoltar.setOnClickListener { finish() }
+        }
     }
 
-    protected fun setIsHeading(textView: TextView) {
+    protected fun modificaNomeTelaAnteriorToolbar(textView: TextView, texto: String) {
+        textView.text = texto
+    }
+
+    private fun setIsHeading(textView: TextView) {
         ViewCompat.setAccessibilityDelegate(textView, object : AccessibilityDelegateCompat() {
             override fun onInitializeAccessibilityNodeInfo(
                 host: View,

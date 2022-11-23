@@ -20,21 +20,16 @@ class CompraEVendaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(compraEVendaBinding.root)
-        setIsHeading(compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo)
-        finalizaOperacao()
-        defineTituloToolbar()
-        criaListenersBotoes()
-    }
-
-    private fun defineTituloToolbar() {
-        when (tipoOperacao) {
-            VENDER -> {
-                compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo.text = VENDER
-            }
-            COMPRAR -> {
-                compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo.text = COMPRAR
-            }
+        tipoOperacao?.let {
+            configuraToolbar(
+                compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo,
+                compraEVendaBinding.toolbarOperacaoFinalizada.btnVoltar,
+                it
+            )
         }
+        modificaNomeTelaAnteriorToolbar(compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTelaAnterior, CAMBIO)
+        finalizaOperacao()
+        configuraBotaoHome()
     }
 
     private fun finalizaOperacao() {
@@ -45,35 +40,32 @@ class CompraEVendaActivity : BaseActivity() {
             operacaoFinalizada.let {
                 if (tipoOperacao == COMPRAR) {
                     it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
-                        .append(getString(R.string.parabens_voce_acabou_de_comprar))
-                        .append(quantidade)
-                        .append(getString(R.string.espaço))
-                        .append(moeda?.isoMoeda)
-                        .append(getString(R.string.hifen))
-                        .append(moeda?.nomeMoeda)
-                        .append(getString(R.string.totalizando))
-                        .append(formataMoedaBrasileira(totalOperacao))
-                        .toString()
+                        .append(
+                            getString(R.string.parabens_voce_acabou_de_comprar),
+                            quantidade,
+                            getString(R.string.espaço),
+                            moeda?.isoMoeda,
+                            getString(R.string.hifen),
+                            moeda?.nomeMoeda,
+                            getString(R.string.totalizando),
+                            formataMoedaBrasileira(totalOperacao)
+                        ).toString()
                 } else if (tipoOperacao == VENDER) {
                     it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
-                        .append(getString(R.string.parabens_voce_acabou_de_vender))
-                        .append(quantidade)
-                        .append(getString(R.string.espaço))
-                        .append(moeda?.isoMoeda)
-                        .append(getString(R.string.hifen))
-                        .append(moeda?.nomeMoeda)
-                        .append(getString(R.string.totalizando))
-                        .append(formataMoedaBrasileira(totalOperacao))
-                        .toString()
+                        .append(
+                            getString(R.string.parabens_voce_acabou_de_vender),
+                            quantidade,
+                            getString(R.string.espaço),
+                            moeda?.isoMoeda,
+                            getString(R.string.hifen),
+                            moeda?.nomeMoeda,
+                            getString(R.string.totalizando),
+                            formataMoedaBrasileira(totalOperacao)
+                        ).toString()
                 }
                 compraEVendaBinding.tvOperacaoFinalizada.text = it
             }
         }
-    }
-
-    private fun criaListenersBotoes() {
-        compraEVendaBinding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
-        configuraBotaoHome()
     }
 
     private fun configuraBotaoHome() {

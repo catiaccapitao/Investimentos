@@ -27,7 +27,12 @@ class CambioActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(cambioBinding.root)
-        setIsHeading(cambioBinding.toolbarCambio.toolbarTitulo)
+        configuraToolbar(
+            cambioBinding.toolbarCambio.toolbarTitulo,
+            cambioBinding.toolbarCambio.btnVoltar,
+            CAMBIO
+        )
+        modificaNomeTelaAnteriorToolbar(cambioBinding.toolbarCambio.toolbarTelaAnterior, MOEDAS)
         inicializaViewModel()
         buscaMoedaSelecionada()
     }
@@ -62,22 +67,30 @@ class CambioActivity : BaseActivity() {
         cambioBinding.tvNomeMoeda.text = moedaModel.nomeMoeda
         cambioBinding.tvVariacaoMoedaCambio.text = formataPorcentagem(moedaModel.variacaoMoeda)
         cambioBinding.tvValorCompra.text = buildString {
-            append(getString(R.string.compra))
-            append(formataMoedaBrasileira(moedaModel.valorCompra))
+            append(
+                getString(R.string.compra),
+                formataMoedaBrasileira(moedaModel.valorCompra)
+            )
         }
         cambioBinding.tvValorVenda.text = buildString {
-            append(getString(R.string.venda))
-            append(formataMoedaBrasileira(moedaModel.valorVenda))
+            append(
+                getString(R.string.venda),
+                formataMoedaBrasileira(moedaModel.valorVenda)
+            )
         }
         cambioBinding.tvValorSaldoDisponivel.text = buildString {
-            append(getString(R.string.saldo_disponivel))
-            append(formataMoedaBrasileira(saldoDisponivel))
+            append(
+                getString(R.string.saldo_disponivel),
+                formataMoedaBrasileira(saldoDisponivel)
+            )
         }
         cambioBinding.tvValorMoedaEmCaixa.text = buildString {
-            append(pegaValorHashmap(moedaModel.isoMoeda))
-            append(getString(R.string.espaço))
-            append(moedaModel.nomeMoeda)
-            append(getString(R.string.em_caixa))
+            append(
+                pegaValorHashmap(moedaModel.isoMoeda),
+                getString(R.string.espaço),
+                moedaModel.nomeMoeda,
+                getString(R.string.em_caixa)
+            )
         }
     }
 
@@ -121,7 +134,6 @@ class CambioActivity : BaseActivity() {
     }
 
     private fun criaListenersBotoes(moedaModel: MoedaModel) {
-        cambioBinding.toolbarCambio.btnVoltar.setOnClickListener { finish() }
         cambioBinding.btnComprar.setOnClickListener { calculoCompra(moedaModel) }
         cambioBinding.btnVender.setOnClickListener { calculoVenda(moedaModel) }
     }

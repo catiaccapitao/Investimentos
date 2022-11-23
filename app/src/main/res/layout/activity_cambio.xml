@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/toolbarCambio"
-        layout="@layout/toolbar_cambio"
+        layout="@layout/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
