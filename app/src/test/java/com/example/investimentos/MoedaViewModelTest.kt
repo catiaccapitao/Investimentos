@@ -22,8 +22,7 @@ class MoedaViewModelTest : BaseTest() {
                 variacaoMoeda = 0.5,
                 valorCompra = 5.10,
                 valorVenda = 5.09,
-                isoMoeda = "EUR",
-                moedaEmCaixa = 0
+                isoMoeda = "EUR"
             )
         }
         val listaEsperada = listOfNotNull(resultado.currencies.EUR)

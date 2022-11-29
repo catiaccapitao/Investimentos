@@ -9,9 +9,8 @@ data class MoedaModel(
     @SerializedName("variation")
     val variacaoMoeda: Double? = null,
     @SerializedName("buy")
-    val valorCompra: Double? = null,
+    var valorCompra: Double? = null,
     @SerializedName("sell")
-    val valorVenda: Double? = null,
-    var isoMoeda: String = "",
-    var moedaEmCaixa: Int = 0
+    var valorVenda: Double? = null,
+    var isoMoeda: String = ""
 ) : Serializable

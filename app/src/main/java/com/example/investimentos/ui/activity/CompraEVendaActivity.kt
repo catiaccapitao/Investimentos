@@ -2,20 +2,16 @@ package com.example.investimentos.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.investimentos.SingletonValoresSimulados.operacao
-import com.example.investimentos.Utils.increaseTouch
+import com.example.investimentos.*
+import com.example.investimentos.SingletonValoresSimulados.tipoOperacao
+import com.example.investimentos.Utils.formataMoedaBrasileira
 import com.example.investimentos.databinding.ActivityCompraEVendaBinding
 import com.example.investimentos.model.MoedaModel
-import java.math.RoundingMode
 
-private const val CAMBIO = "Câmbio"
-private const val VENDER = "Vender"
-private const val COMPRAR = "Comprar"
 
-class CompraEVendaActivity : AppCompatActivity() {
+class CompraEVendaActivity : BaseActivity() {
 
-    private val binding by lazy {
+    private val compraEVendaBinding by lazy {
         ActivityCompraEVendaBinding.inflate(layoutInflater)
     }
     private var moedaModel: MoedaModel? = null
@@ -23,57 +19,57 @@ class CompraEVendaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        configuraToolbar()
-        finalizaOperacao()
-    }
-
-    private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarOperacaoFinalizada.toolbarPrincipal)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarOperacaoFinalizada.btnVoltar.contentDescription = "Volta para tela de câmbio"
-        binding.toolbarOperacaoFinalizada.toolbarTelaAnterior.text = CAMBIO
-        binding.toolbarOperacaoFinalizada.btnVoltar.setOnClickListener { finish() }
-        increaseTouch(binding.toolbarOperacaoFinalizada.btnVoltar, 150F)
-        when (operacao) {
-            "vender" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = VENDER
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription =
-                    "Tela de Venda Finalizada"
-            }
-            "comprar" -> {
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.text = COMPRAR
-                binding.toolbarOperacaoFinalizada.toolbarTitulo.contentDescription =
-                    "Tela de Compra Finalizada"
-            }
+        setContentView(compraEVendaBinding.root)
+        tipoOperacao?.let {
+            configuraToolbar(
+                compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTitulo,
+                compraEVendaBinding.toolbarOperacaoFinalizada.btnVoltar,
+                it
+            )
         }
+        modificaNomeTelaAnteriorToolbar(
+            compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTelaAnterior,
+            CAMBIO
+        )
+        finalizaOperacao()
+        configuraBotaoHome()
     }
 
     private fun finalizaOperacao() {
-        val quantidade = intent.getIntExtra("quantidade", 0)
-        val totalOperacao = intent.getDoubleExtra("operacaoFinalizada", 0.0)
-        moedaModel = intent.getSerializableExtra("moeda") as? MoedaModel
+        val quantidade = intent.getIntExtra(QUANTIDADE, 0)
+        val totalOperacao = intent.getDoubleExtra(OPERACAO_FINALIZADA, 0.0)
+        var operacao = ""
+        moedaModel = intent.getSerializableExtra(MOEDA) as? MoedaModel
         moedaModel.let { moeda ->
             operacaoFinalizada.let {
-                it.append(binding.tvOperacaoFinalizada.text)
-                    .append("Parabéns! \n Você acabou de $operacao\n")
-                    .append("$quantidade ${moeda?.isoMoeda} - ${moeda?.nomeMoeda},\n")
-                    .append("totalizando \n")
+                if (tipoOperacao == COMPRAR) {
+                    operacao = getString(R.string.comprar)
+                } else if (tipoOperacao == VENDER) {
+                    operacao = getString(R.string.vender)
+                }
+                it.append(compraEVendaBinding.tvOperacaoFinalizada.text)
                     .append(
-                        "R$ ${totalOperacao.toBigDecimal().setScale(2, RoundingMode.UP)}"
-                    )
-                    .toString()
-                binding.tvOperacaoFinalizada.text = it
+                        getString(R.string.parabens_voce_acabou_de),
+                        operacao,
+                        getString(R.string.pula_linha),
+                        quantidade,
+                        getString(R.string.espaço),
+                        moeda?.isoMoeda,
+                        getString(R.string.hifen),
+                        moeda?.nomeMoeda,
+                        getString(R.string.totalizando),
+                        formataMoedaBrasileira(totalOperacao)
+                    ).toString()
+                compraEVendaBinding.tvOperacaoFinalizada.text = it
             }
-            configuraBotaoHome(moeda)
         }
     }
 
-    private fun configuraBotaoHome(moedaModel: MoedaModel?) {
-        binding.btnVoltarHome.contentDescription = "Volta para a tela lista de moedas"
-        binding.btnVoltarHome.setOnClickListener {
+    private fun configuraBotaoHome() {
+        compraEVendaBinding.btnVoltarHome.contentDescription =
+            getString(R.string.volta_para_home_moedas)
+        compraEVendaBinding.btnVoltarHome.setOnClickListener {
             Intent(this, HomeActivity::class.java).let {
-                it.putExtra("moeda", moedaModel)
                 finish()
                 startActivity(it)
             }

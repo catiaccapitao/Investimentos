@@ -1,189 +1,170 @@
 package com.example.investimentos.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
-import com.example.investimentos.SingletonValoresSimulados.buscaValorSimuladoParaModel
-import com.example.investimentos.SingletonValoresSimulados.modificaValorPosOperacao
-import com.example.investimentos.SingletonValoresSimulados.operacao
+import com.example.investimentos.*
+import com.example.investimentos.SingletonValoresSimulados.modificaValorSimulado
+import com.example.investimentos.SingletonValoresSimulados.pegaValorHashmap
 import com.example.investimentos.SingletonValoresSimulados.saldoDisponivel
-import com.example.investimentos.Utils
-import com.example.investimentos.Utils.increaseTouch
+import com.example.investimentos.SingletonValoresSimulados.tipoOperacao
+import com.example.investimentos.Utils.desabilitaBotao
+import com.example.investimentos.Utils.formataMoedaBrasileira
+import com.example.investimentos.Utils.formataPorcentagem
+import com.example.investimentos.Utils.habilitaBotao
 import com.example.investimentos.databinding.ActivityCambioBinding
 import com.example.investimentos.model.MoedaModel
-import com.example.investimentos.repository.MoedaRepository
-import com.example.investimentos.viewModel.MoedaViewModel
-import com.example.investimentos.viewModel.MoedaViewModelFactory
-import java.math.RoundingMode
 
-class CambioActivity : AppCompatActivity() {
+class CambioActivity : BaseActivity() {
 
-    private val binding by lazy {
+    private val cambioBinding by lazy {
         ActivityCambioBinding.inflate(layoutInflater)
     }
 
-    private lateinit var moedaViewModel: MoedaViewModel
     private var moedaModel: MoedaModel? = null
     private var quantidade = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        configuraToolbar()
+        setContentView(cambioBinding.root)
+        configuraToolbar(
+            cambioBinding.toolbarCambio.toolbarTitulo,
+            cambioBinding.toolbarCambio.btnVoltar,
+            CAMBIO
+        )
+        modificaNomeTelaAnteriorToolbar(cambioBinding.toolbarCambio.toolbarTelaAnterior, MOEDAS)
         inicializaViewModel()
         buscaMoedaSelecionada()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.edtQuantidade.text?.clear()
+        cambioBinding.edtQuantidade.text?.clear()
         atualizaMoeda()
     }
 
     private fun atualizaMoeda() {
-        moedaModel = intent.getSerializableExtra("moeda") as? MoedaModel
         moedaModel?.let { moeda ->
             preencheDados(moeda)
         }
     }
 
-    private fun configuraToolbar() {
-        setSupportActionBar(binding.toolbarCambio.toolbarPrincipal)
-        binding.toolbarCambio.toolbarTitulo.contentDescription = "Tela de Câmbio"
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbarCambio.btnVoltar.setOnClickListener { finish() }
-        increaseTouch(binding.toolbarCambio.btnVoltar, 150F)
-
-    }
-
-    private fun inicializaViewModel() {
-        moedaViewModel =
-            ViewModelProvider(
-                this,
-                MoedaViewModelFactory(MoedaRepository())
-            )[MoedaViewModel::class.java]
-    }
-
     private fun buscaMoedaSelecionada() {
-        moedaModel = intent.getSerializableExtra("moeda") as? MoedaModel
-        moedaModel.let { moeda ->
-            if (moeda != null) {
-                preencheDados(moeda)
-                configuraEditTextQuantidade(moeda)
-                configuraBotaoComprar(moeda)
-                configuraBotaoVender(moeda)
-            }
+        moedaModel = intent.getSerializableExtra(MOEDA) as? MoedaModel
+        moedaModel?.let { moeda ->
+            preencheDados(moeda)
+            configuraEditTextQuantidade(moeda)
+            criaListenersBotoes(moeda)
         }
     }
 
-
-    @SuppressLint("SetTextI18n")
     private fun preencheDados(moedaModel: MoedaModel) {
-        if (moedaModel.moedaEmCaixa == 0) {
-            buscaValorSimuladoParaModel(moedaModel)
+        if (moedaModel.valorCompra == null) moedaModel.valorCompra = 0.0
+        if (moedaModel.valorVenda == null) moedaModel.valorVenda = 0.0
+        Utils.alteraCorDaVariacaoDaMoeda(moedaModel, cambioBinding.tvVariacaoMoedaCambio)
+
+        cambioBinding.tvIsoMoeda.text = moedaModel.isoMoeda
+        cambioBinding.tvNomeMoeda.text = moedaModel.nomeMoeda
+        cambioBinding.tvVariacaoMoedaCambio.text = formataPorcentagem(moedaModel.variacaoMoeda)
+        cambioBinding.tvValorCompra.text = buildString {
+            append(
+                getString(R.string.compra),
+                formataMoedaBrasileira(moedaModel.valorCompra)
+            )
         }
-        Utils.alteraCorDaVariacaoDaMoeda(moedaModel, binding.tvVariacaoMoedaCambio)
-        binding.tvIsoENomeMoeda.text = "${moedaModel.isoMoeda} - ${moedaModel.nomeMoeda}"
-        binding.tvVariacaoMoedaCambio.text =
-            "${moedaModel.variacaoMoeda.toString().toBigDecimal().setScale(2, RoundingMode.UP)}%"
-        if (moedaModel.valorCompra == null) {
-            binding.tvValorCompra.text = "Compra: R$0.00"
-        } else {
-            binding.tvValorCompra.text = "Compra: R$" +
-                    "${
-                        moedaModel.valorCompra.toString().toBigDecimal()
-                            .setScale(2, RoundingMode.UP)
-                    }"
+        cambioBinding.tvValorVenda.text = buildString {
+            append(
+                getString(R.string.venda),
+                formataMoedaBrasileira(moedaModel.valorVenda)
+            )
         }
-        if (moedaModel.valorVenda == null) {
-            binding.tvValorVenda.text = "Venda: R$0.00"
-        } else {
-            binding.tvValorVenda.text = "Venda: R$" +
-                    "${
-                        moedaModel.valorVenda.toString().toBigDecimal().setScale(2, RoundingMode.UP)
-                    }"
+        cambioBinding.tvValorSaldoDisponivel.text = buildString {
+            append(
+                getString(R.string.saldo_disponivel),
+                formataMoedaBrasileira(saldoDisponivel)
+            )
         }
-        binding.tvValorSaldoDisponivel.text = "Saldo disponível: R$" +
-                "${saldoDisponivel.toBigDecimal().setScale(2, RoundingMode.UP)}"
-        binding.tvValorMoedaEmCaixa.text =
-            "${moedaModel.moedaEmCaixa} ${moedaModel.nomeMoeda} em caixa"
+        cambioBinding.tvValorMoedaEmCaixa.text = buildString {
+            append(
+                pegaValorHashmap(moedaModel.isoMoeda),
+                getString(R.string.espaço),
+                moedaModel.nomeMoeda,
+                getString(R.string.em_caixa)
+            )
+        }
     }
 
     private fun configuraEditTextQuantidade(moedaModel: MoedaModel) {
-        binding.edtQuantidade.doOnTextChanged { text, start, before, count ->
+        cambioBinding.edtQuantidade.doOnTextChanged { text, _, _, _ ->
             if (text.toString().isNotBlank()) {
                 quantidade = text.toString().toInt()
                 if (quantidade > 0) {
-                    habilitaBotaoComprar(moedaModel, quantidade)
-                    habilitaBotaoVender(moedaModel, quantidade)
+                    habilitaBotoes(moedaModel, quantidade, moedaModel.isoMoeda)
                 }
             } else {
-                moedaViewModel.desabilitaBotao(binding.btnVender)
-                moedaViewModel.desabilitaBotao(binding.btnComprar)
+                desabilitaBotoes()
             }
         }
     }
 
-    private fun habilitaBotaoComprar(moedaModel: MoedaModel, quantidade: Int) {
-        if (moedaModel.valorCompra != null) {
-            if (quantidade * moedaModel.valorCompra <= saldoDisponivel) {
-                moedaViewModel.habilitaBotao(binding.btnComprar)
-                binding.btnComprar.contentDescription = "Botão de compra habilitado"
+    private fun habilitaBotoes(moedaModel: MoedaModel, quantidade: Int, isoMoeda: String) {
+        moedaModel.valorCompra?.let { valorCompra ->
+            if (quantidade * valorCompra <= saldoDisponivel) {
+                habilitaBotao(cambioBinding.btnComprar, R.drawable.botao_personalizado)
             } else {
-                moedaViewModel.desabilitaBotao(binding.btnComprar)
-                binding.btnComprar.contentDescription =
-                    "Botão de compra desabilitado, saldo insuficiente para realizar essa compra"
+                desabilitaBotao(
+                    cambioBinding.btnComprar,
+                    R.drawable.botao_personalizado_desabilitado
+                )
             }
         }
-    }
-
-    private fun habilitaBotaoVender(moedaModel: MoedaModel, quantidade: Int) {
-        if (moedaModel.valorVenda != null) {
-            if (quantidade <= moedaModel.moedaEmCaixa) {
-                moedaViewModel.habilitaBotao(binding.btnVender)
-                binding.btnVender.contentDescription = "Botão de venda habilitado"
+        moedaModel.valorVenda?.let { valorVenda ->
+            if (quantidade <= pegaValorHashmap(isoMoeda) && valorVenda > 0) {
+                habilitaBotao(cambioBinding.btnVender, R.drawable.botao_personalizado)
             } else {
-                moedaViewModel.desabilitaBotao(binding.btnVender)
-                binding.btnVender.contentDescription =
-                    "Botão de venda desabilitado, você não possui essa quantidade de moedas para vender"
+                desabilitaBotao(
+                    cambioBinding.btnVender,
+                    R.drawable.botao_personalizado_desabilitado
+                )
             }
         }
     }
 
-    private fun configuraBotaoComprar(moedaModel: MoedaModel) {
-        binding.btnComprar.setOnClickListener {
-            moedaModel.moedaEmCaixa += quantidade
-            modificaValorPosOperacao(moedaModel)
-            val totalCompra = quantidade * moedaModel.valorCompra!!
+    private fun desabilitaBotoes() {
+        desabilitaBotao(cambioBinding.btnVender, R.drawable.botao_personalizado_desabilitado)
+        desabilitaBotao(cambioBinding.btnComprar, R.drawable.botao_personalizado_desabilitado)
+    }
+
+    private fun criaListenersBotoes(moedaModel: MoedaModel) {
+        cambioBinding.btnComprar.setOnClickListener { calculoCompra(moedaModel) }
+        cambioBinding.btnVender.setOnClickListener { calculoVenda(moedaModel) }
+    }
+
+    private fun calculoCompra(moedaModel: MoedaModel) {
+        moedaModel.valorCompra?.let { valorCompra ->
+            modificaValorSimulado(moedaModel.isoMoeda, COMPRAR, quantidade)
+            val totalCompra = quantidade * valorCompra
             saldoDisponivel -= totalCompra
-
-            Intent(this, CompraEVendaActivity::class.java).let {
-                operacao = "comprar"
-                it.putExtra("moeda", moedaModel)
-                it.putExtra("quantidade", quantidade)
-                it.putExtra("operacaoFinalizada", totalCompra)
-                startActivity(it)
-            }
+            finalizaOperacao(CompraEVendaActivity::class.java, COMPRAR, totalCompra)
         }
     }
 
-    private fun configuraBotaoVender(moedaModel: MoedaModel) {
-        binding.btnVender.setOnClickListener {
-            moedaModel.moedaEmCaixa -= quantidade
-            modificaValorPosOperacao(moedaModel)
-            val totalVenda = quantidade * moedaModel.valorVenda!!
+    private fun calculoVenda(moedaModel: MoedaModel) {
+        moedaModel.valorVenda?.let { valorVenda ->
+            modificaValorSimulado(moedaModel.isoMoeda, VENDER, quantidade)
+            val totalVenda = quantidade * valorVenda
             saldoDisponivel += totalVenda
+            finalizaOperacao(CompraEVendaActivity::class.java, VENDER, totalVenda)
+        }
+    }
 
-            Intent(this, CompraEVendaActivity::class.java).let {
-                operacao = "vender"
-                it.putExtra("moeda", moedaModel)
-                it.putExtra("quantidade", quantidade)
-                it.putExtra("operacaoFinalizada", totalVenda)
-                startActivity(it)
-            }
+    private fun finalizaOperacao(classe: Class<*>, operacao: String, total: Double) {
+        Intent(this, classe).let {
+            tipoOperacao = operacao
+            it.putExtra(MOEDA, moedaModel)
+            it.putExtra(QUANTIDADE, quantidade)
+            it.putExtra(OPERACAO_FINALIZADA, total)
+            startActivity(it)
         }
     }
 }
