@@ -20,7 +20,7 @@ object SingletonValoresSimulados {
     fun pegaValorHashmap(isoMoeda: String): Int {
         var quantidadeSimulada = 0
         if (hashMapValoresSimulados.containsKey(isoMoeda)) {
-            hashMapValoresSimulados.map {
+            hashMapValoresSimulados.forEach {
                 if (it.key == isoMoeda) {
                     quantidadeSimulada = it.value
                 }

@@ -8,10 +8,10 @@ import com.example.investimentos.SingletonValoresSimulados.modificaValorSimulado
 import com.example.investimentos.SingletonValoresSimulados.pegaValorHashmap
 import com.example.investimentos.SingletonValoresSimulados.saldoDisponivel
 import com.example.investimentos.SingletonValoresSimulados.tipoOperacao
-import com.example.investimentos.Utils.defineEstadoBotao
 import com.example.investimentos.Utils.desabilitaBotao
 import com.example.investimentos.Utils.formataMoedaBrasileira
 import com.example.investimentos.Utils.formataPorcentagem
+import com.example.investimentos.Utils.habilitaBotao
 import com.example.investimentos.databinding.ActivityCambioBinding
 import com.example.investimentos.model.MoedaModel
 
@@ -110,19 +110,21 @@ class CambioActivity : BaseActivity() {
     private fun habilitaBotoes(moedaModel: MoedaModel, quantidade: Int, isoMoeda: String) {
         moedaModel.valorCompra?.let { valorCompra ->
             if (quantidade * valorCompra <= saldoDisponivel) {
-                defineEstadoBotao(
-                    true,
+                habilitaBotao(cambioBinding.btnComprar, R.drawable.botao_personalizado)
+            } else {
+                desabilitaBotao(
                     cambioBinding.btnComprar,
-                    R.drawable.botao_personalizado
+                    R.drawable.botao_personalizado_desabilitado
                 )
             }
         }
         moedaModel.valorVenda?.let { valorVenda ->
             if (quantidade <= pegaValorHashmap(isoMoeda) && valorVenda > 0) {
-                defineEstadoBotao(
-                    true,
+                habilitaBotao(cambioBinding.btnVender, R.drawable.botao_personalizado)
+            } else {
+                desabilitaBotao(
                     cambioBinding.btnVender,
-                    R.drawable.botao_personalizado
+                    R.drawable.botao_personalizado_desabilitado
                 )
             }
         }

@@ -54,14 +54,6 @@ object Utils {
         return "${formatador.format(valor)}%"
     }
 
-    fun defineEstadoBotao(ehPossivel: Boolean, botao: AppCompatButton, drawableBotao: Int) {
-        if (ehPossivel) {
-            habilitaBotao(botao, drawableBotao)
-        } else {
-            desabilitaBotao(botao, drawableBotao)
-        }
-    }
-
     fun habilitaBotao(botao: AppCompatButton, drawableBotao: Int) {
         botao.isEnabled = true
         botao.setBackgroundResource(drawableBotao)
