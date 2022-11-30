@@ -18,17 +18,10 @@ object SingletonValoresSimulados {
     }
 
     fun pegaValorHashmap(isoMoeda: String): Int {
-        var quantidadeSimulada = 0
-        if (hashMapValoresSimulados.containsKey(isoMoeda)) {
-            hashMapValoresSimulados.forEach {
-                if (it.key == isoMoeda) {
-                    quantidadeSimulada = it.value
-                }
-            }
-        } else {
-            quantidadeSimulada = 0
+        hashMapValoresSimulados[isoMoeda].let { quantidade ->
+            if (quantidade != null) return quantidade
+            else return 0
         }
-        return quantidadeSimulada
     }
 
     fun modificaValorSimulado(
@@ -36,16 +29,14 @@ object SingletonValoresSimulados {
         operacao: String,
         quantidade: Int
     ) {
-        hashMapValoresSimulados.forEach {
-            if (it.key == isoMoeda) {
-                var quantidadeSimulada = it.value
-                if (operacao == COMPRAR) {
-                    quantidadeSimulada += quantidade
-                } else {
-                    quantidadeSimulada -= quantidade
-                }
-                hashMapValoresSimulados[it.key] = quantidadeSimulada
+        var quantidadeSimulada = hashMapValoresSimulados[isoMoeda]
+        if (quantidadeSimulada != null) {
+            if (operacao == COMPRAR) {
+                quantidadeSimulada += quantidade
+            } else {
+                quantidadeSimulada -= quantidade
             }
+            hashMapValoresSimulados[isoMoeda] = quantidadeSimulada
         }
     }
 }
