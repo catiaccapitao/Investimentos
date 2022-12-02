@@ -26,7 +26,6 @@ class HomeActivity : BaseActivity() {
             homeBinding.toolbarHome.btnVoltar,
             MOEDAS
         )
-        modificaNomeTelaAnteriorToolbar(homeBinding.toolbarHome.toolbarTelaAnterior, getString(R.string.espaço))
         inicializaViewModel()
         configuraRecyclerView()
         sincronizaMoedas()

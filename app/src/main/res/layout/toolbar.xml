@@ -17,17 +17,6 @@
         android:contentDescription="@string/volta_para_home_moedas"/>
 
     <TextView
-        android:id="@+id/toolbar_tela_anterior"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:importantForAccessibility="no"
-        android:padding="8dp"
-        android:text="@string/moedas"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
-
-    <TextView
         android:id="@+id/toolbarTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

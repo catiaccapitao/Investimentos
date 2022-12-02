@@ -43,10 +43,6 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun modificaNomeTelaAnteriorToolbar(textView: TextView, texto: String) {
-        textView.text = texto
-    }
-
     private fun setIsHeading(textView: TextView) {
         ViewCompat.setAccessibilityDelegate(textView, object : AccessibilityDelegateCompat() {
             override fun onInitializeAccessibilityNodeInfo(
