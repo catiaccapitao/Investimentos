@@ -27,10 +27,6 @@ class CompraEVendaActivity : BaseActivity() {
                 it
             )
         }
-        modificaNomeTelaAnteriorToolbar(
-            compraEVendaBinding.toolbarOperacaoFinalizada.toolbarTelaAnterior,
-            CAMBIO
-        )
         finalizaOperacao()
         configuraBotaoHome()
     }

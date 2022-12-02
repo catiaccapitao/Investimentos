@@ -32,7 +32,6 @@ class CambioActivity : BaseActivity() {
             cambioBinding.toolbarCambio.btnVoltar,
             CAMBIO
         )
-        modificaNomeTelaAnteriorToolbar(cambioBinding.toolbarCambio.toolbarTelaAnterior, MOEDAS)
         inicializaViewModel()
         buscaMoedaSelecionada()
     }
